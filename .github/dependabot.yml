@@ -6,4 +6,5 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 3
     target-branch: "development"
-    labels: "npm dependencies"
+    labels: 
+      - "npm dependencies"
