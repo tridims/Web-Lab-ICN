@@ -10,15 +10,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model Anggota{
   ID Int @id @default(autoincrement())
-  Name String?
-  Email String? @unique
-  Password String?
+  Nama String
+  Email String @unique
+  NIM_NIP String @unique
+  Prodi Int
+  Kegiatan AnggotaOnKegiatan[]
 }
 
-model Model{
+model Tags{
   ID Int @id @default(autoincrement())
-  Name String?
-  Description String?
+  Nama String
+  Kegiatan TagsOnKegiatan[]
+}
+
+model Kegiatan{
+  ID Int @id @default(autoincrement())
+  Tipe Int
+  Judul String
+  Gambar String
+  Deskripsi String
+  Artikel String
+  Tags TagsOnKegiatan[]
+  Anggota AnggotaOnKegiatan[]
+}
+
+model TagsOnKegiatan{
+  ID Int @id @default(autoincrement())
+  Tags  Tags  @relation(fields: [TagsID], references: [ID])
+  TagsID Int
+  Kegiatan Kegiatan @relation(fields: [KegiatanID], references: [ID])
+  KegiatanID Int
+}
+
+model AnggotaOnKegiatan{
+  ID Int @id @default(autoincrement())
+  Anggota Anggota @relation(fields: [AnggotaID], references: [ID])
+  AnggotaID Int
+  Kegiatan Kegiatan @relation(fields: [KegiatanID], references: [ID])
+  KegiatanID Int
+}
+
+model Peminjaman{
+  ID Int @id @default(autoincrement())
+  Nama String
+  NIM String
+  NoTelp String
+  Alamat String
+  Barang BarangOnPeminjaman[]
+}
+
+model Barang{
+  ID Int @id @default(autoincrement())
+  Nama String
+  Deskripsi String?
+  Peminjaman BarangOnPeminjaman[]
+}
+
+model BarangOnPeminjaman{
+  ID Int @id @default(autoincrement())
+  Barang Barang @relation(fields: [BarangID], references: [ID])
+  BarangID Int
+  Peminjam Peminjaman @relation(fields: [PeminjamanID], references: [ID])
+  PeminjamanID Int
+}
+
+model Presensi{
+  ID Int @id @default(autoincrement())
+  Nama String
+  Email String
+  NIM String
+  NoTelp String?
+  Keperluan String
 }

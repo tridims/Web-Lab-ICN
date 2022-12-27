@@ -1,0 +1,12 @@
+[Unit]
+Description=Website Lab Jaringan Berbasis Informasi
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/lab-jarkom-fe
+ExecStart=/bin/bash -c "source .env && npm install && npx prisma migrate dev --name init && npm run dev"
+Restart=on-failure
+ExecStop=/bin/killal npm
+
+[Install]
+WantedBy=multi-user.target
