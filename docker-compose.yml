@@ -41,6 +41,21 @@ services:
       - dbcont:/var/lib/postgresql/data:rw
     ports:
       - 5432:5432
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_app_lab_jarkom
+    env_file: ".env"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "$PG_EMAIL"
+      PGADMIN_DEFAULT_PASSWORD: "$PG_PASSWORD"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - network_app_lab_jarkom
+    ports:
+      - 8080:80
 
 networks:
   network_app_lab_jarkom:
