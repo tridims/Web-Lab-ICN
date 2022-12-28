@@ -17,7 +17,7 @@ export default (props: Props) => {
           <h1 className='text-5xl lg:text-8xl font-bold mb-4 lg:mb-8'>{title}</h1>
           <h2 className='text-2xl lg:text-6xl font-bold mb-4 lg:mb-8'>{subtitle}</h2>
           <p className='mx-4 md:mx-20 lg:text-lg xl:mx-72 mb-8'>{description}</p>
-          <Button className='bg-white text-black px-20 shadow-lg'>{buttonText}</Button>
+          <Button className='border-0 bg-white text-black hover:bg-[#ffffffdd] px-20 shadow-lg'>{buttonText}</Button>
         </div>
       </div>
       <div className='bg-gradient-to-b from-base h-36' id='gradient' />

@@ -3,6 +3,9 @@ import type { AppProps } from 'next/app'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import Head from 'next/head'
+import { Poppins } from '@next/font/google'
+
+const poppins = Poppins({ weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], subsets: ['latin'] })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -13,6 +16,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.png" />
       </Head>
+      <style jsx global>{`
+        html {
+          font-family: ${poppins.style.fontFamily};
+        }
+      `}</style>
       <Navbar />
       <Component {...pageProps} />
       <Footer />

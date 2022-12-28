@@ -14,7 +14,10 @@ module.exports = {
         base: '#005679',
         baseDark: '#002940',
         cyan: '#0f4350',
-      }
+      },
+      scale: {
+        '101': '1.015',
+      },
     },
   },
   plugins: [
@@ -25,8 +28,8 @@ module.exports = {
       {
         light: {
           ...require('daisyui/src/colors/themes')['[data-theme=light]'],
-          primary: '#11557C',
-          'primary-focus': 'mediumblue',
+          primary: '#005679',
+          'primary-focus': '#106689',
         },
       },
     ],
