@@ -4,7 +4,7 @@ services:
   web:
     container_name: web_app_lab_jarkom
     user: node
-    image: node
+    image: node:18
     command: sh -c "npm install && npx prisma migrate dev --name init && npm run dev"
     env_file: ".env"
     restart: always
@@ -34,7 +34,7 @@ services:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U $DATABASE_USER -d $DATABASE'"]
       interval: 10s
       timeout: 3s
-      retries: 3
+      retries: 10
     networks:
       - network_app_lab_jarkom
     volumes:
