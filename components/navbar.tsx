@@ -11,7 +11,7 @@ export default () => {
   const changeTextColor = () => {
     const gradient = document.getElementById('gradient')
     const footer = document.getElementById('footer')
-    if (gradient === null || footer === null) return true
+    if (gradient === null || footer === null) return setTextWhite(false)
 
     return gradient.getBoundingClientRect().top <= 0 && footer.getBoundingClientRect().top >= 32 ? setTextWhite(false) : setTextWhite(true)
   }
@@ -60,14 +60,14 @@ export default () => {
               Kontak
             </Dropdown.Item>
           </Dropdown.Menu>
-          <Link href='/' className='btn btn-ghost normal-case text-xl hidden lg:flex'>
-            <div className={`w-8 h-8 mr-3 duration-200 ${(textWhite ? 'bg-white' : 'bg-base')}`} style={{
-              mask: 'url("/static/logo.svg") no-repeat center',
-              WebkitMask: 'url("/static/logo.svg") no-repeat center',
-            }} />
-            Lab Jaringan
-          </Link>
         </Dropdown>
+        <Link href='/' className='btn btn-ghost normal-case text-xl hidden lg:flex'>
+          <div className={`w-8 h-8 mr-3 duration-200 ${(textWhite ? 'bg-white' : 'bg-base')}`} style={{
+            mask: 'url("/static/logo.svg") no-repeat center',
+            WebkitMask: 'url("/static/logo.svg") no-repeat center',
+          }} />
+          Lab Jaringan
+        </Link>
       </Navbar.Start>
       <Navbar.End>
         <Link href='/' className='btn btn-ghost normal-case text-xl flex lg:hidden'>

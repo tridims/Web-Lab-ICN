@@ -31,19 +31,19 @@ export default () => {
           <h3 className='text-baseDark font-bold text-3xl'>Layanan</h3>
           <div className='my-12 mx-auto'>
             <div className='lg:flex justify-around'>
-              <Link href='/'>
+              <Link href='/layanan/presensi'>
                 <div className='mb-16 flex flex-col items-center drop-shadow-sm duration-200 hover:scale-101'>
-                  <img className='mb-6 h-64' src='/static/absen.png' alt='Absen' />
-                  <p className='font-semibold text-lg'>Absen Masuk Laboratorium</p>
+                  <img className='mb-6 h-64' src='/static/absen.png' alt='Presensi' />
+                  <p className='font-semibold text-lg'>Presensi Masuk Laboratorium</p>
                 </div>
               </Link>
-              <Link href='/'>
+              <Link href='/layanan/peminjaman'>
                 <div className='mb-16 flex flex-col items-center drop-shadow-sm duration-200 hover:scale-101'>
                   <img className='mb-6 h-64' src='/static/pinjam.png' alt='Pinjam' />
                   <p className='font-semibold text-lg'>Peminjaman Barang</p>
                 </div>
               </Link>
-              <Link href='/'>
+              <Link href='/layanan/pengembalian'>
                 <div className='mb-16 flex flex-col items-center drop-shadow-sm duration-200 hover:scale-101'>
                   <img className='mb-6 h-64' src='/static/retur.png' alt='Retur' />
                   <p className='font-semibold text-lg'>Pengembalian Barang Laboratorium</p>
