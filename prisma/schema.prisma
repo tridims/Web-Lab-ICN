@@ -10,77 +10,83 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Anggota{
-  ID Int @id @default(autoincrement())
-  Nama String
-  Email String @unique
-  NIM_NIP String @unique
-  Prodi Int
-  Kegiatan AnggotaOnKegiatan[]
+model anggota{
+  id Int @id @default(autoincrement())
+  nama String
+  email String @unique
+  nim_nip String @unique
+  prodi Int
+  kegiatan anggota_on_kegiatan[]
 }
 
-model Tags{
-  ID Int @id @default(autoincrement())
-  Nama String
-  Kegiatan TagsOnKegiatan[]
+model tags{
+  id Int @id @default(autoincrement())
+  nama String
+  kegiatan tags_on_kegiatan[]
 }
 
-model Kegiatan{
-  ID Int @id @default(autoincrement())
-  Tipe Int
-  Judul String
-  Gambar String
-  Deskripsi String
-  Artikel String
-  Tags TagsOnKegiatan[]
-  Anggota AnggotaOnKegiatan[]
+model kegiatan{
+  id Int @id @default(autoincrement())
+  tipe Int
+  judul String
+  gambar String
+  deskripsi String
+  artikel String
+  tags tags_on_kegiatan[]
+  anggota anggota_on_kegiatan[]
 }
 
-model TagsOnKegiatan{
-  ID Int @id @default(autoincrement())
-  Tags  Tags  @relation(fields: [TagsID], references: [ID])
-  TagsID Int
-  Kegiatan Kegiatan @relation(fields: [KegiatanID], references: [ID])
-  KegiatanID Int
+model tags_on_kegiatan{
+  id Int @id @default(autoincrement())
+  tags  tags  @relation(fields: [tags_id], references: [id])
+  tags_id Int
+  kegiatan kegiatan @relation(fields: [kegiatan_id], references: [id])
+  kegiatan_id Int
 }
 
-model AnggotaOnKegiatan{
-  ID Int @id @default(autoincrement())
-  Anggota Anggota @relation(fields: [AnggotaID], references: [ID])
-  AnggotaID Int
-  Kegiatan Kegiatan @relation(fields: [KegiatanID], references: [ID])
-  KegiatanID Int
+model anggota_on_kegiatan{
+  id Int @id @default(autoincrement())
+  anggota anggota @relation(fields: [anggota_id], references: [id])
+  anggota_id Int
+  kegiatan kegiatan @relation(fields: [kegiatan_id], references: [id])
+  kegiatan_id Int
 }
 
-model Peminjaman{
-  ID Int @id @default(autoincrement())
-  Nama String
-  NIM String
-  NoTelp String
-  Alamat String
-  Barang BarangOnPeminjaman[]
+model peminjaman{
+  id Int @id @default(autoincrement())
+  nama String
+  nim String
+  no_telp String
+  alamat String
+  barang barang_on_peminjaman[]
 }
 
-model Barang{
-  ID Int @id @default(autoincrement())
-  Nama String
-  Deskripsi String?
-  Peminjaman BarangOnPeminjaman[]
+model barang{
+  id Int @id @default(autoincrement())
+  nama String
+  deskripsi String?
+  peminjaman barang_on_peminjaman[]
 }
 
-model BarangOnPeminjaman{
-  ID Int @id @default(autoincrement())
-  Barang Barang @relation(fields: [BarangID], references: [ID])
-  BarangID Int
-  Peminjam Peminjaman @relation(fields: [PeminjamanID], references: [ID])
-  PeminjamanID Int
+model barang_on_peminjaman{
+  id Int @id @default(autoincrement())
+  barang barang @relation(fields: [barang_id], references: [id])
+  barang_id Int
+  peminjam peminjaman @relation(fields: [peminjaman_id], references: [id])
+  peminjaman_id Int
 }
 
-model Presensi{
-  ID Int @id @default(autoincrement())
-  Nama String
-  Email String
-  NIM String
-  NoTelp String?
-  Keperluan String
+model presensi{
+  id Int @id @default(autoincrement())
+  nama String
+  email String
+  nim String
+  no_telp String?
+  keperluan String
+}
+
+model pesan{
+  id Int @id @default(autoincrement())
+  email String
+  pesan String
 }
