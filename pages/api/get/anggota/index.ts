@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 import { anggota } from "@prisma/client";
-import jsontrue from "../../../lib/jsontrue";
-import jsonfalse from "../../../lib/jsonfalse";
+import jsontrue from "../../../../lib/jsontrue";
+import jsonfalse from "../../../../lib/jsonfalse";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     let anggota:anggota[]
