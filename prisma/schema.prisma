@@ -58,6 +58,8 @@ model peminjaman{
   nim String
   no_telp String
   alamat String
+  pinjam DateTime
+  kembali DateTime
   barang barang_on_peminjaman[]
 }
 
@@ -74,6 +76,7 @@ model barang_on_peminjaman{
   barang_id Int
   peminjam peminjaman @relation(fields: [peminjaman_id], references: [id])
   peminjaman_id Int
+  jumlah Int
 }
 
 model presensi{
