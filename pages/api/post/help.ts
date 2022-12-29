@@ -17,6 +17,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } catch (error) {
             res.status(500).json(jsonfalse("Server is unable to process request",error))
         }
-    }
-    res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
+    }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
 }

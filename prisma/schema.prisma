@@ -67,6 +67,7 @@ model barang{
   id Int @id @default(autoincrement())
   nama String
   deskripsi String?
+  jumlah Int
   peminjaman barang_on_peminjaman[]
 }
 
