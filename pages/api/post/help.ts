@@ -19,4 +19,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
     res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
-}   
+}

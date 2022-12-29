@@ -24,7 +24,17 @@ fi
 # Remove older project revision if exist
 if [ -d "/opt/lab-jarkom-fe" ]; then
     echo "removing older project revision"
-    sudo rm -rf /opt/lab-jarkom-fe -rf
+    # Removing project from /opt
+    sudo rm -rfv /opt/lab-jarkom-fe
+
+    # Disabling lab-jarkom service
+    sudo systemctl disable --now lab-jarkom.service
+
+    # Removing service from systemd
+    sudo rm -fv /etc/systemd/system/lab-jarkom.service
+
+    # Reload systemd daemon
+    sudo systemctl daemon-reload
 fi
 
 # Copy project's directory to /opt
