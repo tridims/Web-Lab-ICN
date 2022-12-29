@@ -11,7 +11,7 @@ export default () => {
   const changeTextColor = () => {
     const gradient = document.getElementById('gradient')
     const footer = document.getElementById('footer')
-    if (gradient === null || footer === null) return setTextWhite(false)
+    if (gradient === null || footer === null) return setTextWhite(true)
 
     return gradient.getBoundingClientRect().top <= 0 && footer.getBoundingClientRect().top >= 32 ? setTextWhite(false) : setTextWhite(true)
   }
@@ -50,13 +50,13 @@ export default () => {
             <Dropdown.Item href='/profil' className={router.pathname == '/profil' ? 'font-semibold' : ''}>
               Profil
             </Dropdown.Item>
-            <Dropdown.Item className={router.pathname == '/penelitian' ? 'font-semibold' : ''}>
-              Penelitian dan Pengabdian
+            <Dropdown.Item href='/tri-dharma' className={router.pathname == '/tri-dharma' ? 'font-semibold' : ''}>
+              Tri Dharma
             </Dropdown.Item>
-            <Dropdown.Item className={router.pathname == '/layanan' ? 'font-semibold' : ''}>
+            <Dropdown.Item href='/layanan' className={router.pathname == '/layanan' ? 'font-semibold' : ''}>
               Layanan
             </Dropdown.Item>
-            <Dropdown.Item className={router.pathname == '/kontak' ? 'font-semibold' : ''}>
+            <Dropdown.Item href='/kontak' className={router.pathname == '/kontak' ? 'font-semibold' : ''}>
               Kontak
             </Dropdown.Item>
           </Dropdown.Menu>
@@ -85,7 +85,7 @@ export default () => {
             <Link href='/profil' className={router.pathname == '/profil' ? 'font-bold' : ''}>Profil</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href='/penelitian' className={router.pathname == '/penelitian' ? 'font-bold' : ''}>Penelitian dan Pengabdian</Link>
+            <Link href='/tri-dharma' className={router.pathname == '/tri-dharma' ? 'font-bold' : ''}>Tri Dharma</Link>
           </Menu.Item>
           <Menu.Item>
             <Link href='/layanan' className={router.pathname == '/layanan' ? 'font-bold' : ''}>Layanan</Link>
