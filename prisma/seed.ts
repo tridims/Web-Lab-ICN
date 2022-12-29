@@ -49,7 +49,8 @@ async function main(){
         await prisma.barang.create({
             data:{
                 nama: faker.lorem.word({length:20}),
-                deskripsi: faker.lorem.sentence(15)
+                deskripsi: faker.lorem.sentence(15),
+                jumlah: faker.datatype.number({min:4,max:10}),
             }
         })
     for(let i=0;i<15;i++)
