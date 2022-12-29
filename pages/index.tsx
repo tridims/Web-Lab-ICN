@@ -2,17 +2,27 @@ import Jumbotron from '../components/jumbotron'
 import Card from '../components/card'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { Kegiatan } from '../types/models'
+import { ToastContainer } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
 
 export default () => {
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState<Kegiatan[]>([])
 
   useEffect(() => {
     fetch('/api/get/kegiatan')
       .then(res => res.json())
-      .then(posts => {
-        setPosts(posts)
+      .then(data => {
+        setPosts(data.data.slice(0, 4))
       })
   }, [])
+
+  const postsCard = posts.map((post, key) => (
+    <div key={key} className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
+      <Card href={`/tri-dharma/${post.id}`} title={post.judul} description={post.deskripsi} image={post.gambar} />
+    </div>
+  ))
 
   return (
     <>
@@ -22,18 +32,7 @@ export default () => {
           <h3 className='text-baseDark font-bold text-3xl mb-8'>Tri Dharma</h3>
           <div className='mx-auto'>
             <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-              <div className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                <Card href='/' title='Test Title' description='Example Description' image='https://api.lorem.space/image/shoes?w=400&h=225' />
-              </div>
-              <div className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                <Card href='/' title='Test Title' description='Example Description' image='https://api.lorem.space/image/shoes?w=400&h=225' />
-              </div>
-              <div className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                <Card href='/' title='Test Title' description='Example Description' image='https://api.lorem.space/image/shoes?w=400&h=225' />
-              </div>
-              <div className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                <Card href='/' title='Test Title' description='Example Description' image='https://api.lorem.space/image/shoes?w=400&h=225' />
-              </div>
+              {postsCard}
             </div>
           </div>
         </div>
@@ -63,6 +62,7 @@ export default () => {
             </div>
           </div>
         </div>
+        <ToastContainer position='bottom-right' theme='colored' autoClose={3000} />
       </main>
     </>
   )

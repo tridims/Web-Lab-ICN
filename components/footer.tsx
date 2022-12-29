@@ -1,8 +1,47 @@
 import Link from 'next/link'
+import { FormEvent, useState } from 'react'
 import { Input, Button, Textarea, Footer } from 'react-daisyui'
-import { Poppins } from '@next/font/google'
+import { toast } from 'react-toastify'
 
 export default () => {
+  const [email, setEmail] = useState('')
+  const [pesan, setPesan] = useState('')
+  const [isLoading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: FormEvent<EventTarget>) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await fetch('/api/post/help', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({
+          email: email,
+          pesan: pesan
+        })
+      })
+
+      if (res.status === 200) {
+        setEmail('')
+        setPesan('')
+        toast('Pesan berhasil dikirimkan.', {
+          type: 'success'
+        })
+      } else {
+        toast('Pesan gagal dikirimkan.', {
+          type: 'error'
+        })
+      }
+    } catch (err) {
+      toast('Pesan gagal dikirimkan.', {
+        type: 'error'
+      })
+    }
+    setLoading(false)
+  }
+
   return (
     <footer id='footer'>
       <div className="bg-[url('/static/footer.jpg')] bg-cover bg-center">
@@ -10,9 +49,15 @@ export default () => {
           <p className='text-white font-bold text-2xl lg:text-5xl drop-shadow-[5px_5px_10px_rgba(0,0,0,0.25)] mb-6'>MORE INFORMATION</p>
           <p className='text-white text-lg lg:text-xl mb-8'>Hubungi kami via Email untuk mendapatkan informasi lebih lanjut mengenai <br className='hidden lg:block' /> Laboratorium Jaringan Berbasis Informasi.</p>
           <div>
-            <div className='mb-4'><Input placeholder='Email Anda' size='md' className='w-60 md:w-96' /></div>
-            <div className='mb-4'><Textarea placeholder='Pesan' className='w-60 md:w-96 h-32' /></div>
-            <div><Button color='primary'>Kirim</Button></div>
+            <form onSubmit={handleSubmit}>
+              <div className='mb-4'>
+                <Input name='email' type='email' value={email} onChange={e => setEmail(e.target.value)} placeholder='Email Anda' size='md' className='w-60 md:w-96' required />
+              </div>
+              <div className='mb-4'>
+                <Textarea name='pesan' value={pesan} onChange={e => setPesan(e.target.value)} placeholder='Pesan' className='w-60 md:w-96 h-32' required />
+              </div>
+              <div><Button type='submit' color='primary' className={isLoading ? 'loading' : ''}>Kirim</Button></div>
+            </form>
           </div>
         </div>
       </div>

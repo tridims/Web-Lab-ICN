@@ -1,25 +1,25 @@
 version: '3'
 
 services:
-  web:
-    container_name: web_app_lab_jarkom
-    user: node
-    image: node:18
-    command: sh -c "npm install && npx prisma migrate dev --name init && npm run dev"
-    env_file: ".env"
-    restart: always
-    environment:
-      DATABASE_URL: "postgresql://$DATABASE_USER:$DATABASE_PASSWORD@db/$DATABASE"
-    working_dir: /app
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/app:rw
-    depends_on:
-      db:
-        condition: service_healthy
-    networks:
-      - network_app_lab_jarkom
+  # web:
+  #   container_name: web_app_lab_jarkom
+  #   user: node
+  #   image: node:18
+  #   command: sh -c "npm install && npx prisma migrate dev --name init && npm run dev"
+  #   env_file: ".env"
+  #   restart: always
+  #   environment:
+  #     DATABASE_URL: "postgresql://$DATABASE_USER:$DATABASE_PASSWORD@db/$DATABASE"
+  #   working_dir: /app
+  #   ports:
+  #     - 3000:3000
+  #   volumes:
+  #     - .:/app:rw
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   networks:
+  #     - network_app_lab_jarkom
   
   db:
     image: postgres:latest

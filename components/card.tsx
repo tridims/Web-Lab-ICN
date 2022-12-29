@@ -12,9 +12,9 @@ export default (props: Props) => {
     const { href, title, description, image } = props
     return (
         <Link href={href}>
-            <Card className='shadow-lg border-2 hover:scale-101 duration-200'>
+            <Card className='shadow-lg border-2 hover:scale-101 duration-200 h-full'>
                 <Card.Image
-                    className='block h-auto w-full'
+                    className='block h-56 object-cover w-full'
                     src={image}
                     alt='Shoes'
                 />
