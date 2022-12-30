@@ -19,8 +19,16 @@ interface Anggota {
     prodi: number
 }
 
+interface Barang {
+    id: number,
+    nama: string,
+    deskripsi?: string,
+    jumlah: number,
+}
+
 export type {
     Kegiatan,
     Pesan,
-    Anggota
+    Anggota,
+    Barang
 }

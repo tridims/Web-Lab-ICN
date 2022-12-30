@@ -1,7 +1,146 @@
-import { Button, Input, InputGroup, Select } from 'react-daisyui'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { Button, Input, InputGroup } from 'react-daisyui'
 import Jumbotron from '../../components/jumbotron'
+import BarangInput from '../../components/barang-input'
+import { GetServerSideProps } from 'next'
+import APIResponse from '../../types/response'
+import { Barang } from '../../types/models'
+import { toast } from 'react-toastify'
+import barangInput from '../../components/barang-input'
+import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
 
-export default () => {
+interface BarangInput {
+  barang?: Barang,
+  jumlah: number
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const res = await fetch('http://localhost:3000/api/get/barang')
+  const data = await res.json()
+
+  return { props: { data } }
+}
+
+export default ({ data }: { data: APIResponse }) => {
+  const barangs = data.data as Barang[]
+
+  const [isLoading, setLoading] = useState(false)
+  const [nama, setNama] = useState('')
+  const [nim, setNim] = useState(0)
+  const [alamat, setAlamat] = useState('')
+  const [email, setEmail] = useState('')
+  const [noTelp, setNoTelp] = useState(0)
+  const [keperluan, setKeperluan] = useState('')
+  const [pinjam, setPinjam] = useState('')
+  const [kembali, setKembali] = useState('')
+
+  const [barangInputs, setBarangInputs] = useState<BarangInput[]>([
+    { jumlah: 0 }
+  ])
+
+  const addInput = () => {
+    setBarangInputs([
+      ...barangInputs,
+      { jumlah: 0 }
+    ])
+  }
+
+  const deleteInput = (index: number) => {
+    setBarangInputs(barangInputs.filter((_, i) => i != index))
+  }
+
+  const handleFormChange = (index: number, event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const data = [...barangInputs]
+    const key = event.target.name as keyof BarangInput
+    const value = Number.parseInt(event.target.value)
+
+    if (key === 'barang') {
+      const barang = barangs.filter(barang => barang.id === value)[0]
+      data[index][key] = barang
+    }
+    else if (key === 'jumlah') {
+      const barang = data[index]['barang']
+      const filteredValue = barang
+        ? Math.min(Math.max(0, value), barang.jumlah)
+        : 0
+      data[index][key] = filteredValue
+    }
+    setBarangInputs(data)
+  }
+
+  const renderBarangInputs = barangInputs.map((barang, index) => (
+    <BarangInput
+      key={index}
+      barangs={barangs}
+      barang={barang.barang}
+      jumlah={barang.jumlah}
+      onChange={event => handleFormChange(index, event)}
+      onDelete={() => deleteInput(index)} />
+  ))
+
+  const handleSubmit = async (e: FormEvent<EventTarget>) => {
+    e.preventDefault()
+    setLoading(true)
+
+    const filteredBarangInputs = barangInputs
+      .filter(barangInput => barangInput.barang)
+      .map(barangInput => ({
+        barang_id: barangInput.barang ? barangInput.barang.id : 0,
+        jumlah: barangInput.jumlah
+      }))
+
+    const requestData = {
+      nama: nama,
+      alamat: alamat,
+      kembali: kembali,
+      pinjam: pinjam,
+      nim: nim,
+      no_telp: noTelp,
+      email: email,
+      keperluan: keperluan,
+      barang: filteredBarangInputs
+    }
+    console.log(requestData)
+    try {
+      const res = await fetch('/api/post/pinjam', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify(data)
+      })
+
+      if (res.status === 200) {
+        setNama('')
+        setAlamat('')
+        setKembali('')
+        setPinjam('')
+        setNim(0)
+        setNoTelp(0)
+        setEmail('')
+        setKeperluan('')
+        setBarangInputs([{ jumlah: 0 }])
+        withReactContent(Swal)
+          .fire({
+            title: <p>Peminjaman berhasil dilakukan.</p>,
+            text: 'Silakan cek Email Anda untuk detil lebih lanjut mengenai peminjaman yang telah dilakukan.',
+            icon: 'success',
+            allowOutsideClick: false
+          })
+      } else {
+        toast(`${res.status} | Peminjaman gagal dilakukan.`, {
+          type: 'error'
+        })
+      }
+    } catch (err) {
+      toast('Peminjaman gagal dilakukan.', {
+        type: 'error'
+      })
+    }
+    setLoading(false)
+  }
+
   return (
     <>
       <Jumbotron title='Peminjaman' subtitle='Barang Laboratorium' />
@@ -14,59 +153,57 @@ export default () => {
         </div>
         <div className='mb-20'>
           <h3 className='text-baseDark font-bold text-3xl mb-8'>Data Peminjaman</h3>
-          <form className='block text-center'>
-            <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Email</span>
-              <Input className='w-full' type='email' placeholder='paulin@ub.ac.id' bordered required />
-            </InputGroup>
+          <form onSubmit={handleSubmit}>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>Nama Lengkap</span>
-              <Input className='w-full' type='text' placeholder='Paulin Suartini' bordered required />
+              <Input value={nama} onChange={e => setNama(e.target.value)}
+                className='w-full' type='text' placeholder='Paulin Suartini' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>NIM</span>
-              <Input className='w-full' type='number' placeholder='205150201111099' bordered required />
-            </InputGroup>
-            <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>No. Telepon</span>
-              <Input className='w-full' type='tel' placeholder='081233382712' bordered required />
+              <Input value={nim || ''} onChange={e => setNim(Number.parseInt(e.target.value))}
+                className='w-full' type='number' placeholder='205150201111099' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>Alamat</span>
-              <Input className='w-full' type='text' placeholder='Jl. Veteran' bordered required />
-            </InputGroup>
-            <hr className='my-8 h-px bg-gray-200 border-0' />
-            <InputGroup vertical size='lg' className='mb-6 shadow'>
-              <span>Barang</span>
-              <Select className='w-full'>
-                <option value={'default'} disabled>
-                  Pilih barang yang akan dipinjam
-                </option>
-                <option value={'Homer'}>Homer</option>
-                <option value={'Marge'}>Marge</option>
-                <option value={'Bart'}>Bart</option>
-                <option value={'Lisa'}>Lisa</option>
-                <option value={'Maggie'}>Maggie</option>
-              </Select>
+              <Input value={alamat} onChange={e => setAlamat(e.target.value)}
+                className='w-full' type='text' placeholder='Jl. Veteran' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Jumlah</span>
-              <Input className='w-full' type='number' placeholder='1' bordered required />
+              <span className='lg:w-52'>Email</span>
+              <Input value={email} onChange={e => setEmail(e.target.value)}
+                className='w-full' type='email' placeholder='username@ub.ac.id' bordered required />
+            </InputGroup>
+            <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
+              <span className='lg:w-52'>Nomor Telepon</span>
+              <Input value={noTelp || ''} onChange={e => setNoTelp(Number.parseInt(e.target.value))}
+                className='w-full' type='tel' placeholder='083341612722' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>Keperluan</span>
-              <Input className='w-full' type='text' placeholder='Kegiatan Praktikum' bordered required />
+              <Input value={keperluan} onChange={e => setKeperluan(e.target.value)}
+                className='w-full' type='text' placeholder='Kebutuhan Praktikum' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-72'>Tanggal Peminjaman</span>
-              <Input className='w-full' type='date' bordered required />
+              <Input value={pinjam} onChange={e => setPinjam(e.target.value)}
+                className='w-full' type='date' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-10 shadow max-lg:input-group-vertical'>
               <span className='lg:w-72'>Tanggal Pengembalian</span>
-              <Input className='w-full' type='date' bordered required />
+              <Input value={kembali} onChange={e => setKembali(e.target.value)}
+                className='w-full' type='date' bordered required />
             </InputGroup>
+            <hr className='my-8 h-px bg-gray-200 border-0' />
+
+            <h3 className='text-baseDark font-bold text-3xl mb-8'>Daftar Peminjaman</h3>
+            <div className='mb-8'>
+              {renderBarangInputs}
+              <Button color='success' onClick={() => addInput()} type='button' className='shadow'>+ Tambah Barang</Button>
+            </div>
+
             <div className='text-center'>
-              <Button color='warning' className='w-full lg:w-52'>Kirim</Button>
+              <Button color='warning' type='submit' className={`w-full lg:w-52 ${isLoading && 'loading'}`}>Kirim</Button>
             </div>
           </form>
         </div>

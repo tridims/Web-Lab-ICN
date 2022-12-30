@@ -3,9 +3,7 @@ import Card from '../components/card'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Kegiatan } from '../types/models'
-import { ToastContainer } from 'react-toastify'
 
-import 'react-toastify/dist/ReactToastify.css'
 
 export default () => {
   const [posts, setPosts] = useState<Kegiatan[]>([])
@@ -62,7 +60,6 @@ export default () => {
             </div>
           </div>
         </div>
-        <ToastContainer position='bottom-right' theme='colored' autoClose={3000} />
       </main>
     </>
   )

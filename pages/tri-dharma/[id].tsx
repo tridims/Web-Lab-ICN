@@ -4,6 +4,7 @@ import { Button } from 'react-daisyui'
 import Card from '../../components/card'
 import ImageJumbotron from '../../components/image-jumbotron'
 import { Kegiatan } from '../../types/models'
+import APIResponse from '../../types/response'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query.id as string
@@ -14,9 +15,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { data } }
 }
 
-export default ({ data }) => {
+export default ({ data }: { data: APIResponse }) => {
   const kegiatan = data.data as Kegiatan
-
   const [posts, setPosts] = useState<Kegiatan[]>([])
 
   useEffect(() => {
