@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
+import email from "../../../lib/email";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     const body=req.body
@@ -13,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     pesan:body.pesan
                 }
             })
+            email(body.email,"Pertanyaan kepada Lab Jaringan Berbasis Informasi","Pertanyaan yang anda ajukan: "+`${body.pesan}`).catch(console.error);
             res.status(200).json(jsontrue("Data added succesfully",result))
         } catch (error) {
             res.status(500).json(jsonfalse("Server is unable to process request",error))
