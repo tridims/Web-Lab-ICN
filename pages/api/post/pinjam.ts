@@ -47,8 +47,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                                 id:result.id
                             }
                         })
+                        await prisma.barang_on_peminjaman.deleteMany({
+                            where:{
+                                peminjaman_id: result.id
+                            }
+                        })
                         res.status(400).json(jsonfalse("No stock available","Amount of goods is greater than what's available"))
                     }
+                }
+                for(let i=0;i<body.barang.length;i++){
+                    let check=await prisma.barang.findFirst({
+                        where:{
+                            id:body.barang[i].barang_id
+                        }
+                    })
+                    if(check!=null)
+                        try {
+                            await prisma.barang.update({
+                                where: { id: body.barang[i].barang_id },
+                                data:{
+                                    jumlah: check.jumlah-body.barang[i].jumlah
+                                }
+                            })
+                        } catch (error) {
+                            res.status(500).json(jsonfalse("Server is unable to process request",error))
+                            
+                        }
                 }
                 let barangs=await prisma.peminjaman.findFirst({
                     where:{id:result.id},
