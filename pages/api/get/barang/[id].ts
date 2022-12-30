@@ -9,7 +9,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         const postId = Number(req.query.id)
         try {
             let result=await prisma.barang.findFirst({
-                where:{ id:postId }
+                where:{ id:postId },
+                include:{
+                    peminjaman:true
+                }
             })    
             res.status(200).json(jsontrue("Data query successful",result))
         } catch (error) {

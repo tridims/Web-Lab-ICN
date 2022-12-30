@@ -68,7 +68,7 @@ async function main(){
                 nim: faker.phone.number("2#5############"),
                 no_telp: faker.phone.number("+62 ### #### ####"),
                 pinjam: faker.date.recent(3),
-                kembali: faker.date.soon(4)
+                kembali: faker.date.soon(4),
             }
         })
     for(let i=1;i<11;i++)

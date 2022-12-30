@@ -60,6 +60,8 @@ model peminjaman{
   alamat String
   pinjam DateTime
   kembali DateTime
+  penerima String @default("")
+  status Boolean @default(false)
   barang barang_on_peminjaman[]
 }
 
