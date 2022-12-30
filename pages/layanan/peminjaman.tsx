@@ -95,8 +95,8 @@ export default ({ data }: { data: APIResponse }) => {
       alamat: alamat,
       kembali: kembali,
       pinjam: pinjam,
-      nim: nim,
-      no_telp: noTelp,
+      nim: nim.toString(),
+      no_telp: noTelp.toString(),
       email: email,
       keperluan: keperluan,
       barang: filteredBarangInputs
@@ -108,8 +108,10 @@ export default ({ data }: { data: APIResponse }) => {
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(requestData)
       })
+
+      const resJson = await res.json()
 
       if (res.status === 200) {
         setNama('')
@@ -124,12 +126,14 @@ export default ({ data }: { data: APIResponse }) => {
         withReactContent(Swal)
           .fire({
             title: <p>Peminjaman berhasil dilakukan.</p>,
-            text: 'Silakan cek Email Anda untuk detil lebih lanjut mengenai peminjaman yang telah dilakukan.',
+            html: `Silakan cek Email Anda untuk detil lebih lanjut mengenai peminjaman yang telah dilakukan.<br>ID Peminjaman Anda adalah: ${resJson.data.id}`,
             icon: 'success',
             allowOutsideClick: false
+          }).then(() => {
+            window.location.reload()
           })
       } else {
-        toast(`${res.status} | Peminjaman gagal dilakukan.`, {
+        toast(`${res.status} | ${resJson.error}.`, {
           type: 'error'
         })
       }
