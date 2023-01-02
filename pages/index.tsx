@@ -9,7 +9,7 @@ export default () => {
   const [posts, setPosts] = useState<Kegiatan[]>([])
 
   useEffect(() => {
-    fetch('/api/get/kegiatan')
+    fetch('/api/kegiatan')
       .then(res => res.json())
       .then(data => {
         setPosts(data.data.slice(0, 4))

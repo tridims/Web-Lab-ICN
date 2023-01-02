@@ -6,7 +6,6 @@ import { GetServerSideProps } from 'next'
 import APIResponse from '../../types/response'
 import { Barang } from '../../types/models'
 import { toast } from 'react-toastify'
-import barangInput from '../../components/barang-input'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
 
@@ -16,7 +15,7 @@ interface BarangInput {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch('http://localhost:3000/api/get/barang')
+  const res = await fetch(`${process.env.APP_URL}/api/barang`)
   const data = await res.json()
 
   return { props: { data } }
@@ -103,7 +102,7 @@ export default ({ data }: { data: APIResponse }) => {
     }
     console.log(requestData)
     try {
-      const res = await fetch('/api/post/pinjam', {
+      const res = await fetch('/api/pinjam', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
