@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../lib/prisma'
-import jsontrue from '../../../../lib/jsontrue'
-import jsonfalse from '../../../../lib/jsonfalse'
+import prisma from '../../../lib/prisma'
+import jsontrue from '../../../lib/jsontrue'
+import jsonfalse from '../../../lib/jsonfalse'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
     
