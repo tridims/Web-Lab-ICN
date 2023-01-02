@@ -3,6 +3,7 @@ import prisma from "../../../lib/prisma";
 import { presensi } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
+import email from "../../../lib/email";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     if(req.method==='GET'){
@@ -26,6 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         no_telp: body.no_telp
                     }
                 })
+                email(body.email,"Presensi Lab Jaringan Berbasis Informasi",JSON.stringify(result))
                 res.status(200).json(jsontrue("Data added succesfully",result))
             } catch (error) {
                 res.status(500).json(jsonfalse("Server is unable to process request",error))
