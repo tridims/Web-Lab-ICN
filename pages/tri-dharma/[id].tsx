@@ -9,7 +9,7 @@ import APIResponse from '../../types/response'
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.query.id as string
 
-  const res = await fetch(`http://localhost:3000/api/get/kegiatan/${id}`)
+  const res = await fetch(`${process.env.APP_URL}/api/kegiatan/${id}`)
   const data = await res.json()
 
   return { props: { data } }
@@ -20,7 +20,7 @@ export default ({ data }: { data: APIResponse }) => {
   const [posts, setPosts] = useState<Kegiatan[]>([])
 
   useEffect(() => {
-    fetch('/api/get/kegiatan')
+    fetch('/api/kegiatan')
       .then(res => res.json())
       .then(data => {
         setPosts(data.data.slice(0, 3))

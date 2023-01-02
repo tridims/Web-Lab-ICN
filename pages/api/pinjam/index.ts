@@ -1,10 +1,29 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
+import { peminjaman } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 import email from "../../../lib/email";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse){
+async function getPinjam(res:any) {
+    let pinjam:peminjaman[]
+    try {
+        pinjam=await prisma.peminjaman.findMany({
+            include:{
+                barang:{
+                    include:{
+                        barang:true
+                    }
+                }
+            }
+        })
+        res.status(200).json(jsontrue("Data query successful",pinjam))
+    } catch (error) {
+        res.status(500).json(jsonfalse("server is unable to process request",error))
+    } 
+}
+
+async function postPinjam(req:any,res:any) {
     const body=req.body
     if(body.nama!=null && body.nim!=null && body.no_telp!=null && body.alamat!=null && body.pinjam!=null && body.kembali!=null && body.barang!=null){
         if (Math.ceil(Math.abs(new Date(body.pinjam).getTime()-new Date(body.kembali).getTime()) / (1000 * 3600 * 24))<=7){
@@ -88,4 +107,47 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         } else res.status(400).json(jsonfalse("Borrow duration is too long","Duration is > 7 Days"))
 
     }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
+}
+
+async function patchPinjam(req:any,res:any){
+    let body=req.body
+    try{
+        let data=await prisma.peminjaman.findFirst({
+            where:{id:body.peminjaman_id}
+        })
+        try {
+            if(data != null && data.status!=true){
+                let result=await prisma.$transaction([
+                    prisma.peminjaman.update({
+                        data:{
+                            status:true,
+                            penerima:body.penerima
+                        },
+                        where:{id:data.id}
+                    }),
+                    prisma.peminjaman.findFirst({
+                        where:{id:data.id}
+                    })
+                ])
+                res.status(200).json(jsontrue("Data updated succesfully",result[1]))
+            } else
+                res.status(400).json(jsonfalse("It's already returned","null"))
+        } catch (error) {
+            res.status(500).json(jsonfalse("server is unable to process request",error))
+        }
+    }catch(error){
+        res.status(400).json(jsonfalse("Data does not exist",error))
+    }
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse){
+    if(req.method==='GET'){
+        getPinjam(res)
+    }else if(req.method==='POST'){
+        postPinjam(req,res)
+    }else if(req.method==='PATCH'){
+        patchPinjam(req,res)
+    }else{
+        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Pinjam API!",null))
+    }
 }

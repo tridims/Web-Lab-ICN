@@ -1,18 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../lib/prisma'
-import jsontrue from '../../../../lib/jsontrue'
-import jsonfalse from '../../../../lib/jsonfalse'
+import prisma from '../../../lib/prisma'
+import jsontrue from '../../../lib/jsontrue'
+import jsonfalse from '../../../lib/jsonfalse'
 
 export default async function handle(req: NextApiRequest, res: NextApiResponse) {
-    
+
     try{
         const postId = Number(req.query.id)
         try {
-            let result=await prisma.barang.findFirst({
-                where:{ id:postId },
-                include:{
-                    peminjaman:true
-                }
+            let result=await prisma.pesan.findFirst({
+                where:{ id:postId }
             })    
             res.status(200).json(jsontrue("Data query successful",result))
         } catch (error) {

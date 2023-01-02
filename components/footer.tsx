@@ -12,7 +12,7 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await fetch('/api/post/help', {
+      const res = await fetch('/api/help', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json; charset=UTF-8'

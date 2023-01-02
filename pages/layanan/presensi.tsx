@@ -15,7 +15,7 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
-      const res = await fetch('/api/post/presensi', {
+      const res = await fetch('/api/presensi', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json; charset=UTF-8'
