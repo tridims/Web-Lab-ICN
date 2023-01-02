@@ -1,6 +1,7 @@
-import { ChangeEvent, MouseEvent } from "react"
-import { Button, Input, Select } from "react-daisyui"
-import { Barang } from "../types/models"
+import { ChangeEvent, MouseEvent } from 'react'
+import { Button, Input } from 'react-daisyui'
+import { Barang } from '../types/models'
+import { t } from '../lib/i18n'
 
 interface Props {
   onDelete(event: MouseEvent<HTMLButtonElement>): void,
@@ -41,12 +42,12 @@ export default (props: Props) => {
           <select name='barang' onChange={onChange}
             className='select mr-4 focus:outline-offset-0 select-bordered' value={barang ? barang.id : -1}>
             <option disabled value={-1}>
-              Pilih barang yang akan dipinjam
+              {t('form:item_placeholder')}
             </option>
             {renderOptions}
           </select>
           <Input name='jumlah' value={jumlah || ''} onChange={onChange}
-            type='number' className='mr-4' placeholder='Jumlah' max={barang ? barang.jumlah : 0} bordered required />
+            type='number' className='mr-4' placeholder={t('form:amount_placeholder')!} max={barang ? barang.jumlah : 0} bordered required />
         </div>
         <Button onClick={onDelete} color='error' type='button' className='text-xl'>🗑</Button>
       </div>

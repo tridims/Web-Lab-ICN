@@ -8,6 +8,7 @@ import { Barang } from '../../types/models'
 import { toast } from 'react-toastify'
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
+import { t } from '../../lib/i18n'
 
 interface BarangInput {
   barang?: Barang,
@@ -68,16 +69,6 @@ export default ({ data }: { data: APIResponse }) => {
     setBarangInputs(data)
   }
 
-  const renderBarangInputs = barangInputs.map((barang, index) => (
-    <BarangInput
-      key={index}
-      barangs={barangs}
-      barang={barang.barang}
-      jumlah={barang.jumlah}
-      onChange={event => handleFormChange(index, event)}
-      onDelete={() => deleteInput(index)} />
-  ))
-
   const handleSubmit = async (e: FormEvent<EventTarget>) => {
     e.preventDefault()
     setLoading(true)
@@ -100,7 +91,6 @@ export default ({ data }: { data: APIResponse }) => {
       keperluan: keperluan,
       barang: filteredBarangInputs
     }
-    console.log(requestData)
     try {
       const res = await fetch('/api/pinjam', {
         method: 'POST',
@@ -146,67 +136,77 @@ export default ({ data }: { data: APIResponse }) => {
 
   return (
     <>
-      <Jumbotron title='Peminjaman' subtitle='Barang Laboratorium' />
+      <Jumbotron
+        title={t('services:borrow.title')}
+        subtitle={t('services:borrow.subtitle')} />
       <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
         <div className='text-center mb-20'>
-          <h3 className='text-baseDark font-bold text-3xl mb-8'>Tata Tertib Peminjaman Barang</h3>
-          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32 mb-4'>Durasi maksimal peminjaman barang adalah 7 hari. Keterlambatan pengembalian DENDA 20.000/hari.</div>
-          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32 mb-4'>Barang diwajibkan kembali dalam keadaan baik. Apabila terdapat kerusakan maka wajib mengganti senilai 50% dari harga barang.</div>
-          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32'>Barang yang hilang wajib diganti dengan barang serupa.</div>
+          <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:borrow.rules_title')}</h3>
+          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32 mb-4'>{t('services:borrow.rules_1')}</div>
+          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32 mb-4'>{t('services:borrow.rules_2')}</div>
+          <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32'>{t('services:borrow.rules_3')}</div>
         </div>
         <div className='mb-20'>
-          <h3 className='text-baseDark font-bold text-3xl mb-8'>Data Peminjaman</h3>
+          <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:borrow.data_title')}</h3>
           <form onSubmit={handleSubmit}>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Nama Lengkap</span>
+              <span className='lg:w-52'>{t('form:name')}</span>
               <Input value={nama} onChange={e => setNama(e.target.value)}
                 className='w-full' type='text' placeholder='Paulin Suartini' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>NIM</span>
+              <span className='lg:w-52'>{t('form:nim')}</span>
               <Input value={nim || ''} onChange={e => setNim(Number.parseInt(e.target.value))}
                 className='w-full' type='number' placeholder='205150201111099' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Alamat</span>
+              <span className='lg:w-52'>{t('form:address')}</span>
               <Input value={alamat} onChange={e => setAlamat(e.target.value)}
                 className='w-full' type='text' placeholder='Jl. Veteran' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Email</span>
+              <span className='lg:w-52'>{t('form:email')}</span>
               <Input value={email} onChange={e => setEmail(e.target.value)}
                 className='w-full' type='email' placeholder='username@ub.ac.id' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Nomor Telepon</span>
+              <span className='lg:w-52'>{t('form:phone')}</span>
               <Input value={noTelp || ''} onChange={e => setNoTelp(Number.parseInt(e.target.value))}
                 className='w-full' type='tel' placeholder='083341612722' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-52'>Keperluan</span>
+              <span className='lg:w-52'>{t('form:purpose')}</span>
               <Input value={keperluan} onChange={e => setKeperluan(e.target.value)}
                 className='w-full' type='text' placeholder='Kebutuhan Praktikum' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-72'>Tanggal Peminjaman</span>
+              <span className='lg:w-72'>{t('form:borrow_date')}</span>
               <Input value={pinjam} onChange={e => setPinjam(e.target.value)}
                 className='w-full' type='date' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-10 shadow max-lg:input-group-vertical'>
-              <span className='lg:w-72'>Tanggal Pengembalian</span>
+              <span className='lg:w-72'>{t('form:return_date')}</span>
               <Input value={kembali} onChange={e => setKembali(e.target.value)}
                 className='w-full' type='date' bordered required />
             </InputGroup>
             <hr className='my-8 h-px bg-gray-200 border-0' />
 
-            <h3 className='text-baseDark font-bold text-3xl mb-8'>Daftar Peminjaman</h3>
+            <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:borrow.items_title')}</h3>
             <div className='mb-8'>
-              {renderBarangInputs}
-              <Button color='success' onClick={() => addInput()} type='button' className='shadow'>+ Tambah Barang</Button>
+              {barangInputs.map((barang, index) => (
+                <BarangInput
+                  key={index}
+                  barangs={barangs}
+                  barang={barang.barang}
+                  jumlah={barang.jumlah}
+                  onChange={event => handleFormChange(index, event)}
+                  onDelete={() => deleteInput(index)} />
+              ))}
+              <Button color='success' onClick={() => addInput()} type='button' className='shadow'>{t('form:add_button')}</Button>
             </div>
 
             <div className='text-center'>
-              <Button color='warning' type='submit' className={`w-full lg:w-52 ${isLoading && 'loading'}`}>Kirim</Button>
+              <Button color='warning' type='submit' className={`w-full lg:w-52 ${isLoading && 'loading'}`}>{t('button_send')}</Button>
             </div>
           </form>
         </div>

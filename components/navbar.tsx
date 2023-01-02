@@ -2,6 +2,7 @@ import { Button, Dropdown, Menu, Navbar } from 'react-daisyui'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { t } from '../lib/i18n'
 
 export default () => {
   const router = useRouter()
@@ -45,19 +46,19 @@ export default () => {
           </Button>
           <Dropdown.Menu tabIndex={0} className='w-52 menu-compact mt-3 text-black'>
             <Dropdown.Item href='/' className={router.pathname == '/' ? 'font-semibold' : ''}>
-              Home
+              {t('navbar:home')}
             </Dropdown.Item>
             <Dropdown.Item href='/profil' className={router.pathname == '/profil' ? 'font-semibold' : ''}>
-              Profil
+              {t('navbar:profile')}
             </Dropdown.Item>
             <Dropdown.Item href='/tri-dharma' className={router.pathname == '/tri-dharma' ? 'font-semibold' : ''}>
-              Tri Dharma
+              {t('navbar:tri_dharma')}
             </Dropdown.Item>
             <Dropdown.Item href='/layanan' className={router.pathname == '/layanan' ? 'font-semibold' : ''}>
-              Layanan
+              {t('navbar:services')}
             </Dropdown.Item>
             <Dropdown.Item href='/kontak' className={router.pathname == '/kontak' ? 'font-semibold' : ''}>
-              Kontak
+              {t('navbar:contacts')}
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -66,7 +67,7 @@ export default () => {
             mask: 'url("/static/logo.svg") no-repeat center',
             WebkitMask: 'url("/static/logo.svg") no-repeat center',
           }} />
-          Lab Jaringan
+          {t('app_name_short')}
         </Link>
       </Navbar.Start>
       <Navbar.End>
@@ -75,23 +76,23 @@ export default () => {
             mask: 'url("/static/logo.svg") no-repeat center',
             WebkitMask: 'url("/static/logo.svg") no-repeat center',
           }} />
-          Lab Jaringan
+          {t('app_name_short')}
         </Link>
         <Menu horizontal className='p-0 hidden lg:flex'>
           <Menu.Item>
-            <Link href='/' className={router.pathname == '/' ? 'font-bold' : ''}>Home</Link>
+            <Link href='/' className={router.pathname == '/' ? 'font-bold' : ''}>{t('navbar:home')}</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href='/profil' className={router.pathname == '/profil' ? 'font-bold' : ''}>Profil</Link>
+            <Link href='/profil' className={router.pathname == '/profil' ? 'font-bold' : ''}>{t('navbar:profile')}</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href='/tri-dharma' className={router.pathname == '/tri-dharma' ? 'font-bold' : ''}>Tri Dharma</Link>
+            <Link href='/tri-dharma' className={router.pathname == '/tri-dharma' ? 'font-bold' : ''}>{t('navbar:tri_dharma')}</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href='/layanan' className={router.pathname == '/layanan' ? 'font-bold' : ''}>Layanan</Link>
+            <Link href='/layanan' className={router.pathname == '/layanan' ? 'font-bold' : ''}>{t('navbar:services')}</Link>
           </Menu.Item>
           <Menu.Item>
-            <Link href='/kontak' className={router.pathname == '/kontak' ? 'font-bold' : ''}>Kontak</Link>
+            <Link href='/kontak' className={router.pathname == '/kontak' ? 'font-bold' : ''}>{t('navbar:contacts')}</Link>
           </Menu.Item>
         </Menu>
       </Navbar.End>

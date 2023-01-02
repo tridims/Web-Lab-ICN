@@ -1,13 +1,17 @@
 import Link from 'next/link'
-import { Button, Card } from 'react-daisyui'
+import { Card } from 'react-daisyui'
 import Jumbotron from '../../components/jumbotron'
+import { t } from '../../lib/i18n'
 
 export default () => {
   return (
     <>
-      <Jumbotron title='Layanan' subtitle='Jaringan Berbasis Informasi' buttonText='Lihat Layanan' />
+      <Jumbotron
+        title={t('services:page.title')}
+        subtitle={t('services:page.subtitle')}
+        buttonText={t('services:page.button')} />
       <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
-        <h3 className='text-baseDark font-bold text-3xl mb-8'>Layanan</h3>
+        <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('navbar:services')}</h3>
 
         <Link href='/layanan/presensi'>
           <Card side='lg' className='mb-8 shadow-lg hover:scale-101 duration-200 border-2'>
@@ -17,8 +21,8 @@ export default () => {
               className='w-24 m-8'
             />
             <Card.Body>
-              <Card.Title tag='h2' className='text-2xl'>Absen Masuk Laboratorium</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <Card.Title tag='h2' className='text-2xl'>{t('services:attendance.item.title')}</Card.Title>
+              <p>{t('services:attendance.item.description')}</p>
             </Card.Body>
           </Card>
         </Link>
@@ -31,8 +35,8 @@ export default () => {
               className='w-24 m-8'
             />
             <Card.Body>
-              <Card.Title tag='h2' className='text-2xl'>Peminjaman Barang Laboratorium</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <Card.Title tag='h2' className='text-2xl'>{t('services:borrow.item.title')}</Card.Title>
+              <p>{t('services:borrow.item.description')}</p>
             </Card.Body>
           </Card>
         </Link>
@@ -45,8 +49,8 @@ export default () => {
               className='w-24 m-8'
             />
             <Card.Body>
-              <Card.Title tag='h2' className='text-2xl'>Pengembalian Barang Laboratorium</Card.Title>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <Card.Title tag='h2' className='text-2xl'>{t('services:return.item.title')}</Card.Title>
+              <p>{t('services:return.item.description')}</p>
             </Card.Body>
           </Card>
         </Link>

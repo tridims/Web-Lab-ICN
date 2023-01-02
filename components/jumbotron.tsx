@@ -3,8 +3,8 @@ import { Button } from 'react-daisyui'
 interface Props {
   title: string,
   subtitle: string,
-  description?: string,
-  buttonText?: string,
+  description?: string | null,
+  buttonText?: string | null,
 }
 
 export default (props: Props) => {
