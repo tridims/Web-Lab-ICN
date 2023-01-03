@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/opt/lab-jarkom-fe
 ExecStart=/bin/bash -c "source .env && npm install && npx prisma migrate dev --name init && npm run dev"
 Restart=on-failure
-ExecStop=/bin/killal npm
+ExecStop=/bin/killall "npm run dev"
 
 [Install]
 WantedBy=multi-user.target
