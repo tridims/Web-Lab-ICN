@@ -27,8 +27,8 @@ export default () => {
 
       <Content>
         <CardContainer
-          title={t('navbar:tri_dharma')}
-          href='/tri-dharma'
+          title={t('tri-dharma:research')}
+          href='/tri-dharma/penelitian'
           button={t('button_more')}>
           {
             posts
@@ -47,8 +47,8 @@ export default () => {
         </CardContainer>
 
         <CardContainer
-          title={t('navbar:tri_dharma')}
-          href='/tri-dharma'
+          title={t('tri-dharma:dedication')}
+          href='/tri-dharma/pengabdian'
           button={t('button_more')}>
           {
             posts
@@ -67,8 +67,8 @@ export default () => {
         </CardContainer>
 
         <CardContainer
-          title={t('navbar:tri_dharma')}
-          href='/tri-dharma'
+          title={t('tri-dharma:education')}
+          href='/tri-dharma/pendidikan'
           button={t('button_more')}>
           {
             posts
@@ -87,8 +87,8 @@ export default () => {
         </CardContainer>
 
         <CardContainer
-          title={t('navbar:tri_dharma')}
-          href='/tri-dharma'
+          title={t('tri-dharma:other')}
+          href='/tri-dharma/kegiatan-lain'
           button={t('button_more')}>
           {
             posts

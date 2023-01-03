@@ -1,9 +1,10 @@
+import Link from "next/link"
 import { Button } from "react-daisyui"
 
 interface Props {
   title: string,
-  href: string,
-  button: string,
+  href?: string,
+  button?: string | null,
   children: any
 }
 
@@ -15,9 +16,12 @@ export default ({ title, href, button, children }: Props) => {
         <div className='flex flex-wrap -mx-1 lg:-mx-4'>
           {children}
         </div>
-        <div className='text-right mt-2'>
-          <a href={href}><Button color='primary'>{button}</Button></a>
-        </div>
+        {
+          button && href &&
+          <div className='text-right mt-2'>
+            <Link href={href}><Button color='primary'>{button}</Button></Link>
+          </div>
+        }
       </div>
     </div>
   )
