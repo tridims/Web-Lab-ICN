@@ -78,8 +78,8 @@ export default () => {
         </div>
         <div>
           <Footer.Title>{t('app_name')}</Footer.Title>
-          <p>Fakultas Ilmu Komputer Gedung F 9.6</p>
-          <p>Jl. Veteran No. 8, Malang, 65145, Indonesia</p>
+          <p>{t('lab_address')}</p>
+          <p>{t('faculty_address')}</p>
           <div className='flex mt-2'>
             <Link href={{
               pathname: router.pathname,
@@ -97,7 +97,7 @@ export default () => {
         </div>
       </Footer>
       <div className='bg-base text-center p-8'>
-        <p className='text-white'>©{new Date().getFullYear()}. All Rights Reserved. by Lab Jaringan 2022</p>
+        <p className='text-white'>©{new Date().getFullYear()}. All Rights Reserved. by {t('app_name_short')} 2022</p>
       </div>
     </footer>
   )
