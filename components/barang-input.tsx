@@ -21,15 +21,15 @@ export default (props: Props) => {
   const renderBarang = (
     <div>
       <div className='mb-6'>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>Nama Barang</h5>
+        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_name')}</h5>
         {barang?.nama}
       </div>
       <div className='mb-6'>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>Deskripsi Barang</h5>
+        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_description')}</h5>
         {barang?.deskripsi}
       </div>
       <div>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>Stok Barang</h5>
+        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_stock')}</h5>
         {barang?.jumlah}
       </div>
     </div>

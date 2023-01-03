@@ -18,7 +18,7 @@ export default ({ title, href, button, children }: Props) => {
         </div>
         {
           button && href &&
-          <div className='text-right mt-2'>
+          <div className='text-right mt-4'>
             <Link href={href}><Button color='primary'>{button}</Button></Link>
           </div>
         }

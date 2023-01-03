@@ -62,7 +62,7 @@ export default () => {
 
       <Content>
         <div>
-          <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:attendance.page.heading')}</h3>
+          <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:attendance.heading')}</h3>
           <form onSubmit={handleSubmit} className='block text-center'>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>{t('form:email')}</span>

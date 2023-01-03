@@ -1,39 +1,42 @@
 {
   "page": {
-    "title": "Layanan",
-    "subtitle": "Lab Jaringan Berbasis Informasi",
-    "button": "Lihat Layanan"
+    "title": "Service",
+    "subtitle": "Information Based Network Lab",
+    "button": "View Service"
   },
   "attendance": {
     "item": {
-      "title": "Presensi Masuk Laboratorium",
-      "description": "Presensi Masuk Laboratorium ..."
+      "title": "Laboratory Attendance",
+      "description": "Laboratory Attendance..."
     },
-    "title": "Presensi",
-    "subtitle": "Masuk Laboratorium",
-    "heading": "Silakan isi Presensi"
+    "title": "Presence",
+    "subtitle": "Laboratory Entry",
+    "heading": "Please fill in Attendance"
   },
   "borrow": {
     "item": {
-      "title": "Peminjaman Barang Laboratorium",
-      "description": "Peminjaman Barang Laboratorium ..."
+      "title": "Laboratory Items Borrow",
+      "description": "Laboratory Items Borrow..."
     },
-    "title": "Peminjaman",
-    "subtitle": "Barang Laboratorium",
-    "rules_title": "Tata Tertib Peminjaman Barang",
-    "rules_1": "Durasi maksimal peminjaman barang adalah 7 hari. Keterlambatan pengembalian DENDA 20.000/hari.",
-    "rules_2": "Barang diwajibkan kembali dalam keadaan baik. Apabila terdapat kerusakan maka wajib mengganti senilai 50% dari harga barang.",
-    "rules_3": "Barang yang hilang wajib diganti dengan barang serupa.",
-    "data_title": "Data Peminjaman",
-    "items_title": "Daftar Peminjaman"
+    "title": "Borrowing",
+    "subtitle": "Laboratory Items",
+    "rules_title": "Rules of Procedure for Borrowing Items",
+    "rules_1": "The maximum duration of borrowing is 7 days. Late returns will be fined Rp20,000/day.",
+    "rules_2": "Items are required to be returned in good condition. If there is damage, it is mandatory to replace 50% of the price of the item.",
+    "rules_3": "Lost items must be replaced with similar items.",
+    "data_title": "Borrower Data",
+    "items_title": "Items List",
+    "item_name": "Item Name",
+    "item_description": "Item Description",
+    "item_stock": "Item Stock"
   },
   "return": {
     "item": {
-      "title": "Pengembalian Barang Laboratorium",
-      "description": "Pengembalian Barang Laboratorium ..."
+      "title": "Laboratory Item Return",
+      "description": "Laboratory Item Return..."
     },
-    "title": "Pengembalian",
-    "subtitle": "Barang Laboratorium",
-    "heading": "Data Pengembalian"
+    "title": "Returns",
+    "subtitle": "Laboratory Goods",
+    "heading": "Returns Data"
   }
 }

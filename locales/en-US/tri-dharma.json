@@ -1,10 +1,10 @@
 {
-  "title": "Tri Dharma",
+  "title": "Duties",
   "subtitle": "$t(homepage:subtitle)",
-  "description": "Tri Dharma laboratorium jaringan berbasis informasi berfokus pada penelitian, pengabdian, dan pendidikan dalam bidang pengembangan jaringan. Sebagai contoh, pembuatan moodlebox untuk pembelajaran di daerah yang sulit mendapat jaringan internet.",
-  "button": "Selengkapnya",
-  "research": "Penelitian",
-  "dedication": "Pengabdian",
-  "education": "Pendidikan",
-  "other": "Kegiatan Lain"
+  "description": "The obligations of the information-based network laboratory focus on research, service, and education in the field of network development. For example, making moodleboxes for learning in areas that are difficult to get internet networks.",
+  "button": "Find Out More",
+  "research": "Researches",
+  "dedication": "Dedications",
+  "education": "Educations",
+  "other": "Other Activities"
 }
