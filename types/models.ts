@@ -4,6 +4,7 @@ interface Kegiatan {
     deskripsi: string,
     artikel: string,
     gambar: string,
+    tipe: number,
 }
 
 interface Pesan {

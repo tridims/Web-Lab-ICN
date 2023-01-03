@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Card } from 'react-daisyui'
+import Content from '../../components/content'
 import Jumbotron from '../../components/jumbotron'
 import { t } from '../../lib/i18n'
 
@@ -10,7 +11,8 @@ export default () => {
         title={t('services:page.title')}
         subtitle={t('services:page.subtitle')}
         buttonText={t('services:page.button')} />
-      <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
+
+      <Content>
         <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('navbar:services')}</h3>
 
         <Link href='/layanan/presensi'>
@@ -54,7 +56,7 @@ export default () => {
             </Card.Body>
           </Card>
         </Link>
-      </main>
+      </Content>
     </>
   )
 }

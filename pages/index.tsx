@@ -1,5 +1,7 @@
 import Jumbotron from '../components/jumbotron'
 import Card from '../components/card'
+import CardContainer from '../components/card-container'
+import Content from '../components/content'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { Kegiatan } from '../types/models'
@@ -26,21 +28,23 @@ export default () => {
         description={t('homepage:description')}
         buttonText={t('homepage:about')} />
 
-      <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
-        <div className='mb-20'>
-          <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('navbar:tri_dharma')}</h3>
-          <div className='mx-auto'>
-            <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-              {
-                posts.map((post, key) => (
-                  <div key={key} className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                    <Card href={`/tri-dharma/${post.id}`} title={post.judul} description={post.deskripsi} image={post.gambar} />
-                  </div>
-                ))
-              }
-            </div>
-          </div>
-        </div>
+      <Content>
+        <CardContainer
+          title={t('navbar:tri_dharma')}
+          href='/tri-dharma'
+          button={t('button_more')}>
+          {
+            posts.map((post, key) => (
+              <Card
+                key={key}
+                width={'1/4'}
+                href={`/tri-dharma/${post.id}`}
+                title={post.judul}
+                description={post.deskripsi}
+                image={post.gambar} />
+            ))
+          }
+        </CardContainer>
 
         <div>
           <h3 className='text-baseDark font-bold text-3xl'>{t('navbar:services')}</h3>
@@ -67,7 +71,7 @@ export default () => {
             </div>
           </div>
         </div>
-      </main>
+      </Content>
     </>
   )
 }

@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Button, Input, InputGroup } from 'react-daisyui'
 import Jumbotron from '../../components/jumbotron'
 import BarangInput from '../../components/barang-input'
+import Content from '../../components/content'
 import { GetServerSideProps } from 'next'
 import APIResponse from '../../types/response'
 import { Barang } from '../../types/models'
@@ -139,7 +140,8 @@ export default ({ data }: { data: APIResponse }) => {
       <Jumbotron
         title={t('services:borrow.title')}
         subtitle={t('services:borrow.subtitle')} />
-      <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
+
+      <Content>
         <div className='text-center mb-20'>
           <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:borrow.rules_title')}</h3>
           <div className='bg-warning p-4 font-semibold rounded-2xl xl:mx-32 mb-4'>{t('services:borrow.rules_1')}</div>
@@ -210,7 +212,7 @@ export default ({ data }: { data: APIResponse }) => {
             </div>
           </form>
         </div>
-      </main>
+      </Content>
     </>
   )
 }

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Jumbotron from '../../components/jumbotron'
+import Content from '../../components/content'
 import { t } from '../../lib/i18n'
 
 export default () => {
@@ -26,7 +27,7 @@ export default () => {
       <Jumbotron
         title={t('services:return.title')}
         subtitle={t('services:return.subtitle')} />
-      <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
+      <Content>
         <div className='mb-20'>
           <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:return.heading')}</h3>
           <form onSubmit={handleSubmit} className='block text-center'>
@@ -45,7 +46,7 @@ export default () => {
             </div>
           </form>
         </div>
-      </main>
+      </Content>
     </>
   )
 }

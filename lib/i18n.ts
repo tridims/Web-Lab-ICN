@@ -8,7 +8,9 @@ const namespaces = [
   'footer',
   'homepage',
   'form',
-  'services'
+  'services',
+  'profile',
+  'tri-dharma'
 ]
 
 const languages = {

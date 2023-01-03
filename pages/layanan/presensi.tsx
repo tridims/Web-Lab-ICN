@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react'
 import { Button, Input, InputGroup } from 'react-daisyui'
 import { toast } from 'react-toastify'
 import Jumbotron from '../../components/jumbotron'
+import Content from '../../components/content'
 import { t } from '../../lib/i18n'
 
 export default () => {
@@ -58,7 +59,8 @@ export default () => {
       <Jumbotron
         title={t('services:attendance.title')}
         subtitle={t('services:attendance.subtitle')} />
-      <main className='mx-4 md:mx-20 xl:mx-32 my-16'>
+
+      <Content>
         <div>
           <h3 className='text-baseDark font-bold text-3xl mb-8'>{t('services:attendance.page.heading')}</h3>
           <form onSubmit={handleSubmit} className='block text-center'>
@@ -90,7 +92,7 @@ export default () => {
             <Button color='warning' className={`w-full lg:w-52 ${isLoading && 'loading'}`}>{t('button_send')}</Button>
           </form>
         </div>
-      </main>
+      </Content>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Button } from 'react-daisyui'
 import Card from '../../components/card'
 import ImageJumbotron from '../../components/image-jumbotron'
+import Content from '../../components/content'
 import { t } from '../../lib/i18n'
 import { Kegiatan } from '../../types/models'
 import APIResponse from '../../types/response'
@@ -31,7 +32,8 @@ export default ({ data }: { data: APIResponse }) => {
   return (
     <>
       <ImageJumbotron image={kegiatan.gambar} title={kegiatan.judul} />
-      <main className='mx-4 md:mx-20 xl:mx-32 my-20'>
+
+      <Content>
         <div className='mb-20'>
           <h3 className='text-baseDark font-bold text-3xl mb-3'>{kegiatan.judul}</h3>
           <h4 className='mb-12 text-sm'>By Admin, in Date</h4>
@@ -54,14 +56,18 @@ export default ({ data }: { data: APIResponse }) => {
             </div>
             {
               posts.map((post, key) => (
-                <div key={key} className='my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/4'>
-                  <Card href={`/tri-dharma/${post.id}`} title={post.judul} description={post.deskripsi} image={post.gambar} />
-                </div>
+                <Card
+                  key={key}
+                  width='1/4'
+                  href={`/tri-dharma/${post.id}`}
+                  title={post.judul}
+                  description={post.deskripsi}
+                  image={post.gambar} />
               ))
             }
           </div>
         </div>
-      </main>
+      </Content>
     </>
   )
 }
