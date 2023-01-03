@@ -37,19 +37,21 @@ export default (props: Props) => {
 
   return (
     <div className='p-4 lg:p-8 shadow-lg border-2 rounded-xl mb-8'>
-      <div className='flex justify-between'>
-        <div>
-          <select name='barang' onChange={onChange}
-            className='select mr-4 focus:outline-offset-0 select-bordered' value={barang ? barang.id : -1}>
+      <div className='lg:flex'>
+        <div className='mb-4 lg:mb-0'>
+          <select name='barang' value={barang ? barang.id : -1} onChange={onChange}
+            className='select mr-4 focus:outline-offset-0 select-bordered w-full lg:w-auto'>
             <option disabled value={-1}>
               {t('form:item_placeholder')}
             </option>
             {renderOptions}
           </select>
-          <Input name='jumlah' value={jumlah || ''} onChange={onChange}
-            type='number' className='mr-4' placeholder={t('form:amount_placeholder')!} max={barang ? barang.jumlah : 0} bordered required />
         </div>
-        <Button onClick={onDelete} color='error' type='button' className='text-xl'>🗑</Button>
+        <div className='flex justify-between lg:w-full'>
+          <Input name='jumlah' value={jumlah || ''} onChange={onChange}
+            type='number' className='mr-4 w-full lg:w-auto' placeholder={t('form:amount_placeholder')!} max={barang ? barang.jumlah : 0} bordered required />
+          <Button onClick={onDelete} color='error' type='button' className='text-xl'>🗑</Button>
+        </div>
       </div>
       {barang && renderBarang}
     </div>
