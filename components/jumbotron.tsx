@@ -7,9 +7,7 @@ interface Props {
   buttonText?: string | null,
 }
 
-export default (props: Props) => {
-  const { title, subtitle, description, buttonText } = props
-
+export default ({ title, subtitle, description, buttonText }: Props) => {
   const scroll = () => {
     const gradient = document.getElementById('gradient')
     if (gradient !== null) gradient.scrollIntoView({

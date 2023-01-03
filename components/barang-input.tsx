@@ -11,30 +11,7 @@ interface Props {
   jumlah: number,
 }
 
-export default (props: Props) => {
-  const { onDelete, onChange, jumlah, barangs, barang } = props
-
-  const renderOptions = barangs.map((barang, index) => (
-    <option key={index} value={barang.id}>{barang.nama}</option>
-  ))
-
-  const renderBarang = (
-    <div>
-      <div className='mb-6'>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_name')}</h5>
-        {barang?.nama}
-      </div>
-      <div className='mb-6'>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_description')}</h5>
-        {barang?.deskripsi}
-      </div>
-      <div>
-        <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_stock')}</h5>
-        {barang?.jumlah}
-      </div>
-    </div>
-  )
-
+export default ({ onDelete, onChange, jumlah, barangs, barang }: Props) => {
   return (
     <div className='p-4 lg:p-8 shadow-lg border-2 rounded-xl mb-8'>
       <div className='lg:flex'>
@@ -44,7 +21,11 @@ export default (props: Props) => {
             <option disabled value={-1}>
               {t('form:item_placeholder')}
             </option>
-            {renderOptions}
+            {
+              barangs.map((barang, index) => (
+                <option key={index} value={barang.id}>{barang.nama}</option>
+              ))
+            }
           </select>
         </div>
         <div className='flex justify-between lg:w-full'>
@@ -53,7 +34,24 @@ export default (props: Props) => {
           <Button onClick={onDelete} color='error' type='button' className='text-xl'>🗑</Button>
         </div>
       </div>
-      {barang && renderBarang}
+      {barang &&
+        (
+          <div>
+            <div className='mb-6'>
+              <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_name')}</h5>
+              {barang?.nama}
+            </div>
+            <div className='mb-6'>
+              <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_description')}</h5>
+              {barang?.deskripsi}
+            </div>
+            <div>
+              <h5 className='text-baseDark font-bold text-xl mt-6 mb-3'>{t('services:borrow.item_stock')}</h5>
+              {barang?.jumlah}
+            </div>
+          </div>
+        )
+      }
     </div>
   )
 }
