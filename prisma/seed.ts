@@ -2,6 +2,7 @@
 
 import prisma from "../lib/prisma"
 import { faker } from "@faker-js/faker"
+import ShortUniqueId from "short-unique-id"
 
 async function main(){
     for(let i=0;i<10;i++)
@@ -71,6 +72,7 @@ async function main(){
                 kembali: faker.date.soon(4),
                 email: faker.internet.email(),
                 keperluan: faker.lorem.sentence(10),
+                kode_peminjaman: new ShortUniqueId().randomUUID(6)
             }
         })
     for(let i=1;i<11;i++)
