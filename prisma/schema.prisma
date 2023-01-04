@@ -3,13 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  extensions = [citext]
 }
 
 model anggota{
@@ -23,7 +21,7 @@ model anggota{
 
 model tags{
   id Int @id @default(autoincrement())
-  nama String @db.Citext @unique
+  nama String
   kegiatan tags_on_kegiatan[]
 }
 
@@ -64,7 +62,6 @@ model peminjaman{
   alamat String
   pinjam DateTime
   kembali DateTime
-  kode_peminjaman String @unique
   penerima String @default("")
   status Boolean @default(false)
   barang barang_on_peminjaman[]
