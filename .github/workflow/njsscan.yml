@@ -2,9 +2,9 @@ name: njsscan sarif
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "main","development" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main","development" ]
   schedule:
     - cron: '0 0 * * *'
 
