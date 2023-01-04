@@ -4,6 +4,7 @@ import { peminjaman } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 import email from "../../../lib/email";
+import ShortUniqueId from "short-unique-id";
 
 async function getPinjam(res:any) {
     let pinjam:peminjaman[]
@@ -37,7 +38,8 @@ async function postPinjam(req:any,res:any) {
                         keperluan:body.keperluan,
                         alamat:body.alamat,
                         pinjam:new Date(body.pinjam),
-                        kembali:new Date(body.kembali)
+                        kembali:new Date(body.kembali),
+                        kode_peminjaman: new ShortUniqueId().randomUUID(6)
                     }
                 })
                 for(let i=0;i<body.barang.length;i++){
@@ -113,7 +115,7 @@ async function patchPinjam(req:any,res:any){
     let body=req.body
     try{
         let data=await prisma.peminjaman.findFirst({
-            where:{id:body.peminjaman_id}
+            where:{kode_peminjaman:body.kode_peminjaman}
         })
         try {
             if(data != null && data.status!=true){
@@ -123,10 +125,10 @@ async function patchPinjam(req:any,res:any){
                             status:true,
                             penerima:body.penerima
                         },
-                        where:{id:data.id}
+                        where:{kode_peminjaman:body.kode_peminjaman}
                     }),
                     prisma.peminjaman.findFirst({
-                        where:{id:data.id}
+                        where:{kode_peminjaman:body.kode_peminjaman}
                     })
                 ])
                 res.status(200).json(jsontrue("Data updated succesfully",result[1]))
