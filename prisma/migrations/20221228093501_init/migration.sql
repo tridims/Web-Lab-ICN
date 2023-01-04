@@ -1,5 +1,61 @@
--- CreateExtension
-CREATE EXTENSION IF NOT EXISTS "citext";
+/*
+  Warnings:
+
+  - You are about to drop the `Anggota` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `AnggotaOnKegiatan` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Barang` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `BarangOnPeminjaman` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Kegiatan` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Peminjaman` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Presensi` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `Tags` table. If the table is not empty, all the data it contains will be lost.
+  - You are about to drop the `TagsOnKegiatan` table. If the table is not empty, all the data it contains will be lost.
+
+*/
+-- DropForeignKey
+ALTER TABLE "AnggotaOnKegiatan" DROP CONSTRAINT "AnggotaOnKegiatan_AnggotaID_fkey";
+
+-- DropForeignKey
+ALTER TABLE "AnggotaOnKegiatan" DROP CONSTRAINT "AnggotaOnKegiatan_KegiatanID_fkey";
+
+-- DropForeignKey
+ALTER TABLE "BarangOnPeminjaman" DROP CONSTRAINT "BarangOnPeminjaman_BarangID_fkey";
+
+-- DropForeignKey
+ALTER TABLE "BarangOnPeminjaman" DROP CONSTRAINT "BarangOnPeminjaman_PeminjamanID_fkey";
+
+-- DropForeignKey
+ALTER TABLE "TagsOnKegiatan" DROP CONSTRAINT "TagsOnKegiatan_KegiatanID_fkey";
+
+-- DropForeignKey
+ALTER TABLE "TagsOnKegiatan" DROP CONSTRAINT "TagsOnKegiatan_TagsID_fkey";
+
+-- DropTable
+DROP TABLE "Anggota";
+
+-- DropTable
+DROP TABLE "AnggotaOnKegiatan";
+
+-- DropTable
+DROP TABLE "Barang";
+
+-- DropTable
+DROP TABLE "BarangOnPeminjaman";
+
+-- DropTable
+DROP TABLE "Kegiatan";
+
+-- DropTable
+DROP TABLE "Peminjaman";
+
+-- DropTable
+DROP TABLE "Presensi";
+
+-- DropTable
+DROP TABLE "Tags";
+
+-- DropTable
+DROP TABLE "TagsOnKegiatan";
 
 -- CreateTable
 CREATE TABLE "anggota" (
@@ -15,7 +71,7 @@ CREATE TABLE "anggota" (
 -- CreateTable
 CREATE TABLE "tags" (
     "id" SERIAL NOT NULL,
-    "nama" CITEXT NOT NULL,
+    "nama" TEXT NOT NULL,
 
     CONSTRAINT "tags_pkey" PRIMARY KEY ("id")
 );
@@ -56,14 +112,7 @@ CREATE TABLE "peminjaman" (
     "nama" TEXT NOT NULL,
     "nim" TEXT NOT NULL,
     "no_telp" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "keperluan" TEXT NOT NULL,
     "alamat" TEXT NOT NULL,
-    "pinjam" TIMESTAMP(3) NOT NULL,
-    "kembali" TIMESTAMP(3) NOT NULL,
-    "kode_peminjaman" TEXT NOT NULL,
-    "penerima" TEXT NOT NULL DEFAULT '',
-    "status" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "peminjaman_pkey" PRIMARY KEY ("id")
 );
@@ -73,7 +122,6 @@ CREATE TABLE "barang" (
     "id" SERIAL NOT NULL,
     "nama" TEXT NOT NULL,
     "deskripsi" TEXT,
-    "jumlah" INTEGER NOT NULL,
 
     CONSTRAINT "barang_pkey" PRIMARY KEY ("id")
 );
@@ -83,7 +131,6 @@ CREATE TABLE "barang_on_peminjaman" (
     "id" SERIAL NOT NULL,
     "barang_id" INTEGER NOT NULL,
     "peminjaman_id" INTEGER NOT NULL,
-    "jumlah" INTEGER NOT NULL,
 
     CONSTRAINT "barang_on_peminjaman_pkey" PRIMARY KEY ("id")
 );
@@ -100,41 +147,26 @@ CREATE TABLE "presensi" (
     CONSTRAINT "presensi_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "pesan" (
-    "id" SERIAL NOT NULL,
-    "email" TEXT NOT NULL,
-    "pesan" TEXT NOT NULL,
-
-    CONSTRAINT "pesan_pkey" PRIMARY KEY ("id")
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "anggota_email_key" ON "anggota"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "anggota_nim_nip_key" ON "anggota"("nim_nip");
 
--- CreateIndex
-CREATE UNIQUE INDEX "tags_nama_key" ON "tags"("nama");
-
--- CreateIndex
-CREATE UNIQUE INDEX "peminjaman_kode_peminjaman_key" ON "peminjaman"("kode_peminjaman");
-
 -- AddForeignKey
 ALTER TABLE "tags_on_kegiatan" ADD CONSTRAINT "tags_on_kegiatan_tags_id_fkey" FOREIGN KEY ("tags_id") REFERENCES "tags"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tags_on_kegiatan" ADD CONSTRAINT "tags_on_kegiatan_kegiatan_id_fkey" FOREIGN KEY ("kegiatan_id") REFERENCES "kegiatan"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "tags_on_kegiatan" ADD CONSTRAINT "tags_on_kegiatan_kegiatan_id_fkey" FOREIGN KEY ("kegiatan_id") REFERENCES "kegiatan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "anggota_on_kegiatan" ADD CONSTRAINT "anggota_on_kegiatan_anggota_id_fkey" FOREIGN KEY ("anggota_id") REFERENCES "anggota"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "anggota_on_kegiatan" ADD CONSTRAINT "anggota_on_kegiatan_kegiatan_id_fkey" FOREIGN KEY ("kegiatan_id") REFERENCES "kegiatan"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "anggota_on_kegiatan" ADD CONSTRAINT "anggota_on_kegiatan_kegiatan_id_fkey" FOREIGN KEY ("kegiatan_id") REFERENCES "kegiatan"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "barang_on_peminjaman" ADD CONSTRAINT "barang_on_peminjaman_barang_id_fkey" FOREIGN KEY ("barang_id") REFERENCES "barang"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "barang_on_peminjaman" ADD CONSTRAINT "barang_on_peminjaman_peminjaman_id_fkey" FOREIGN KEY ("peminjaman_id") REFERENCES "peminjaman"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "barang_on_peminjaman" ADD CONSTRAINT "barang_on_peminjaman_peminjaman_id_fkey" FOREIGN KEY ("peminjaman_id") REFERENCES "peminjaman"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
