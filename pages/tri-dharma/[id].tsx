@@ -31,12 +31,11 @@ export default ({ data }: { data: APIResponse }) => {
 
   return (
     <>
-      <ImageJumbotron image={kegiatan.gambar} title={kegiatan.judul} />
+      <ImageJumbotron image={kegiatan.gambar} category={kegiatan.tipe} />
 
       <Content>
         <div className='mb-20'>
-          <h3 className='text-baseDark font-bold text-3xl mb-3'>{kegiatan.judul}</h3>
-          <h4 className='mb-12 text-sm'>By Admin, in Date</h4>
+          <h3 className='text-baseDark font-bold text-3xl mb-8 text-center'>{kegiatan.judul}</h3>
           <div className='text-lg leading-9'>
             {kegiatan.artikel}
           </div>
