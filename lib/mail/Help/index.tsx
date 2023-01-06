@@ -10,7 +10,7 @@ function Help(email: string, pesan: string) {
         width: '100px',
         height: '100px',
         margin: '0 auto',
-        backgroundImage: 'url("https://drive.google.com/uc?id=1IwyoSQ_DOqfEN2tdOM0-z29mYbpdfn_s")',
+        backgroundImage: 'url("https://raw.githubusercontent.com/Evan-aja/lab-jarkom-fe/development/public/static/logo.png")',
         backgroundSize: 'contain'
       }} />
       <div style={{
