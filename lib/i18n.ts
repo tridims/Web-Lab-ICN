@@ -10,7 +10,8 @@ const namespaces = [
   'form',
   'services',
   'profile',
-  'tri-dharma'
+  'tri-dharma',
+  'error'
 ]
 
 const languages = {

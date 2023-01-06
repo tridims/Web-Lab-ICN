@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Button } from 'react-daisyui'
 
 interface Props {
@@ -5,15 +6,22 @@ interface Props {
   subtitle: string,
   description?: string | null,
   buttonText?: string | null,
+  buttonHref?: string | null,
 }
 
-export default ({ title, subtitle, description, buttonText }: Props) => {
+export default ({ title, subtitle, description, buttonText, buttonHref }: Props) => {
   const scroll = () => {
+    if (buttonHref) return
+
     const gradient = document.getElementById('gradient')
     if (gradient !== null) gradient.scrollIntoView({
       behavior: 'smooth'
     })
   }
+
+  const button = (
+    <Button className='border-0 bg-white text-black hover:bg-[#ffffffdd] px-20 shadow-lg' onClick={scroll}>{buttonText}</Button>
+  )
 
   return (
     <>
@@ -24,7 +32,12 @@ export default ({ title, subtitle, description, buttonText }: Props) => {
           <p className='mx-4 md:mx-20 lg:text-lg xl:mx-72 mb-8'>{description}</p>
           {
             buttonText &&
-            <Button className='border-0 bg-white text-black hover:bg-[#ffffffdd] px-20 shadow-lg' onClick={scroll}>{buttonText}</Button>
+            (
+              buttonHref
+                ? <Link href={buttonHref}>{button}</Link>
+                : <>{button}</>
+            )
+
           }
         </div>
       </div>

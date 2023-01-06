@@ -7,17 +7,16 @@ import Content from '../../components/content'
 import { t } from '../../lib/i18n'
 import { Kegiatan } from '../../types/models'
 import APIResponse from '../../types/response'
+import Custom404 from '../404'
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = context.query.id as string
-
-  const res = await fetch(`${process.env.APP_URL}/api/kegiatan/${id}`)
-  const data = await res.json()
-
-  return { props: { data } }
-}
 
 export default ({ data }: { data: APIResponse }) => {
+  if (!data.success || data.data === null) {
+    return (
+      <Custom404 />
+    )
+  }
+
   const kegiatan = data.data as Kegiatan
   const [posts, setPosts] = useState<Kegiatan[]>([])
 
@@ -69,4 +68,13 @@ export default ({ data }: { data: APIResponse }) => {
       </Content>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const id = context.query.id as string
+
+  const res = await fetch(`${process.env.APP_URL}/api/kegiatan/${id}`)
+  const data = await res.json()
+
+  return { props: { data } }
 }
