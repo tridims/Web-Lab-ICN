@@ -4,6 +4,8 @@ import { pesan } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 import email from "../../../lib/email";
+import Help from "../../../lib/mail/Help";
+import * as ReactDOMServer from 'react-dom/server';
 
 async function getHelp(res:any){
     let pesan:pesan[]
@@ -25,7 +27,7 @@ async function postHelp(req:any,res:any){
                     pesan:body.pesan
                 }
             })
-            email(body.email,"Pertanyaan kepada Lab Jaringan Berbasis Informasi","Pertanyaan yang anda ajukan: "+`${body.pesan}`).catch(console.error);
+            email(body.email,"Pertanyaan kepada Lab Jaringan Berbasis Informasi","",ReactDOMServer.renderToStaticMarkup(Help(body.email,body.pesan))).catch(console.error);
             res.status(200).json(jsontrue("Data added succesfully",result))
         } catch (error) {
             res.status(500).json(jsonfalse("Server is unable to process request",error))

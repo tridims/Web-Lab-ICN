@@ -27,10 +27,10 @@ async function getPinjam(res:any) {
 async function postPinjam(req:any,res:any) {
     const body=req.body
     if(body.nama!=null && body.nim!=null && body.no_telp!=null && body.alamat!=null && body.pinjam!=null && body.kembali!=null && body.barang!=null){
-        if (Math.ceil((new Date(body.pinjam).getTime()-new Date(body.kembali).getTime()) / (1000 * 3600 * 24))<0)
+        if (Math.ceil((new Date(body.kembali).getTime()-new Date(body.pinjam).getTime()) / (1000 * 3600 * 24))<0)
             res.status(400).json(jsonfalse("Borrow duration is too short","Duration is < 1 Days"))
-        if (Math.ceil((new Date(body.pinjam).getTime()-new Date(body.kembali).getTime()) / (1000 * 3600 * 24))>=1)
-        if (Math.ceil((new Date(body.pinjam).getTime()-new Date(body.kembali).getTime()) / (1000 * 3600 * 24))<=7){
+        if (Math.ceil((new Date(body.kembali).getTime()-new Date(body.pinjam).getTime()) / (1000 * 3600 * 24))>=1)
+        if (Math.ceil((new Date(body.kembali).getTime()-new Date(body.pinjam).getTime()) / (1000 * 3600 * 24))<=7){
             try {
                 let result = await prisma.peminjaman.create({
                     data:{
