@@ -12,6 +12,7 @@ async function main(){
                 nama: faker.name.fullName(),
                 nim_nip: faker.phone.number("2#5############"),
                 prodi: faker.datatype.number({min: 1, max:5}),
+                tipe: faker.datatype.number({min: 0, max:2})
             }
         })
     for(let i=0;i<5;i++)
@@ -73,6 +74,23 @@ async function main(){
                 email: faker.internet.email(),
                 keperluan: faker.lorem.sentence(10),
                 kode_peminjaman: new ShortUniqueId().randomUUID(6)
+            }
+        })
+    for(let i=0;i<10;i++)
+    await prisma.peminjaman.create({
+        data:{
+            nama: faker.name.fullName(),
+            alamat: faker.address.buildingNumber(),
+            nim: faker.phone.number("2#5############"),
+            no_telp: faker.phone.number("+62 ### #### ####"),
+            pinjam: faker.date.recent(3),
+            kembali: faker.date.soon(4),
+            email: faker.internet.email(),
+            keperluan: faker.lorem.sentence(10),
+            kode_peminjaman: new ShortUniqueId().randomUUID(6),
+            penerima: faker.name.fullName(),
+            status: true,
+            aktual_kembali: faker.date.soon(1)
             }
         })
     for(let i=1;i<11;i++)
