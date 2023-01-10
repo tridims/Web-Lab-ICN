@@ -129,7 +129,10 @@ async function patchPinjam(req:any,res:any){
                             penerima:body.penerima,
                             aktual_kembali: new Date()
                         },
-                        where:{kode_peminjaman:body.kode_peminjaman}
+                        where:{kode_peminjaman:body.kode_peminjaman},
+                        include:{
+                            barang: true
+                        }
                     }),
                 ])
                 let tmp=await prisma.barang_on_peminjaman.findMany({
