@@ -125,59 +125,57 @@ async function postPinjam(req:any,res:any) {
 
 async function patchPinjam(req:any,res:any){
     let body=req.body
-    try{
-        let data=await prisma.peminjaman.findFirst({
-            where:{kode_peminjaman:body.kode_peminjaman}
-        })
-        try {
-            if(data != null && data.status!=true){
-                let result=await prisma.$transaction([
-                    prisma.peminjaman.update({
-                        data:{
-                            status:true,
-                            penerima:body.penerima,
-                            aktual_kembali: new Date()
-                        },
-                        where:{kode_peminjaman:body.kode_peminjaman},
-                        include:{
-                            barang: true
-                        }
-                    }),
-                ])
-                let tmp=await prisma.barang_on_peminjaman.findMany({
-                    where:{
-                        peminjaman_id:result[0].id
+    let data=await prisma.peminjaman.findFirst({
+        where:{kode_peminjaman:body.kode_peminjaman}
+    })
+    try {
+        if(data != null && data.status!=true){
+            let result=await prisma.$transaction([
+                prisma.peminjaman.update({
+                    data:{
+                        status:true,
+                        penerima:body.penerima,
+                        aktual_kembali: new Date()
+                    },
+                    where:{kode_peminjaman:body.kode_peminjaman},
+                    include:{
+                        barang: true
                     }
-                })
-                tmp.forEach(async (i)=>{
-                    let barang=await prisma.barang.findFirst({
-                        where:{id:i.barang_id}
-                    })
-                    if(barang!=null)
-                    await prisma.barang.update({
-                        where: { id: i.barang_id },
-                        data:{
-                            jumlah: barang.jumlah+i.jumlah
-                        }
-                    })
-                })
-                let tanggal=datecalc(result[0].kembali,result[0].aktual_kembali)
-                let keterlambatan={}
-                if(tanggal>=1){
-                    keterlambatan={
-                        "keterlambatan":`${tanggal} hari`,
-                        "denda":`Rp.${tanggal*20000}`
-                    }
+                }),
+            ])
+            let tmp=await prisma.barang_on_peminjaman.findMany({
+                where:{
+                    peminjaman_id:result[0].id
                 }
-                email(result[0].email,"Pengembalian Peminjaman Barang Lab",JSON.stringify(result[0])+"\n"+JSON.stringify(keterlambatan))
-                res.status(200).json(jsontrue("Data updated succesfully",{peminjaman:result[0],pengembalian:keterlambatan}))
-            } else
-                res.status(400).json(jsonfalse("It's already returned","null"))
-        } catch (error) {
-            res.status(500).json(jsonfalse("server is unable to process request",error))
-        }
-    }catch(error){
-        res.status(400).json(jsonfalse("Data does not exist",error))
+            })
+            tmp.forEach(async (i)=>{
+                let barang=await prisma.barang.findFirst({
+                    where:{id:i.barang_id}
+                })
+                if(barang!=null)
+                await prisma.barang.update({
+                    where: { id: i.barang_id },
+                    data:{
+                        jumlah: barang.jumlah+i.jumlah
+                    }
+                })
+            })
+            let tanggal=datecalc(result[0].kembali,result[0].aktual_kembali)
+            let keterlambatan={}
+            if(tanggal>=1){
+                keterlambatan={
+                    "keterlambatan":`${tanggal} hari`,
+                    "denda":`Rp.${tanggal*20000}`
+                }
+            }
+            email(result[0].email,"Pengembalian Peminjaman Barang Lab",JSON.stringify(result[0])+"\n"+JSON.stringify(keterlambatan))
+            res.status(200).json(jsontrue("Data updated succesfully",{peminjaman:result[0],pengembalian:keterlambatan}))
+        } else if(data!=null && data.status == true){
+            res.status(400).json(jsonfalse("It's already returned","null"))
+        } else
+            res.status(400).json(jsonfalse("Data does not exist","Null data error: Data is null or undefined"))
+    } catch (error) {
+        res.status(500).json(jsonfalse("server is unable to process request",error))
     }
 }
 
