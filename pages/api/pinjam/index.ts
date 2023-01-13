@@ -110,7 +110,11 @@ async function postPinjam(req:any,res:any) {
                 let barangs=await prisma.peminjaman.findFirst({
                     where:{id:result.id},
                     include:{
-                        barang:true
+                        barang:{
+                            include:{
+                                barang: true
+                            }
+                        }
                     }
                 })
                 email(body.email,"Invoice Peminjaman Barang Lab",JSON.stringify(barangs))
