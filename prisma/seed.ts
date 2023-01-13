@@ -21,14 +21,14 @@ async function main(){
                 nama: faker.name.jobTitle(),
             }
         })
-    for(let i=0;i<3;i++)
+    for(let i=0;i<12;i++)
         await prisma.kegiatan.create({
             data:{
                 tipe: faker.datatype.number({min:1,max:4}),
                 judul: faker.lorem.sentence(5),
                 gambar: faker.image.imageUrl(480,480),
                 deskripsi: faker.lorem.sentence(15),
-                artikel: faker.lorem.sentences(20)
+                artikel: faker.lorem.sentences(200)
             }
         })
     for(let i=1;i<4;i++)

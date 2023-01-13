@@ -31,6 +31,7 @@ async function postPinjam(req:any,res:any) {
             res.status(400).json(jsonfalse("Borrow duration is too short","Duration is < 1 Days"))
         if (Math.ceil((new Date(body.kembali).getTime()-new Date(body.pinjam).getTime()) / (1000 * 3600 * 24))>=1)
         if (Math.ceil((new Date(body.kembali).getTime()-new Date(body.pinjam).getTime()) / (1000 * 3600 * 24))<=7){
+            let idx=0
             try {
                 let result = await prisma.peminjaman.create({
                     data:{
@@ -45,58 +46,66 @@ async function postPinjam(req:any,res:any) {
                         kode_peminjaman: new ShortUniqueId().randomUUID(6)
                     }
                 })
-                for(let i=0;i<body.barang.length;i++){
-                    let check=await prisma.barang.findFirst({
-                        where:{
-                            id:body.barang[i].barang_id
-                        }
-                    })
-                    if(check != null && check.jumlah>body.barang[i].jumlah && check.jumlah > 0){
-                        await prisma.barang_on_peminjaman.create({
-                            data:{
-                                peminjaman_id: result.id,
-                                barang_id: body.barang[i].barang_id,
-                                jumlah: body.barang[i].jumlah
-                            }
-                        })
-                        await prisma.barang.update({
-                            where: { id: body.barang[i].barang_id },
-                            data:{
-                                jumlah: check.jumlah-body.barang[i].jumlah
-                            }
-                        })
-                    } else {
-                        await prisma.peminjaman.delete({
+                try {
+                    for(let i=0;i<body.barang.length;i++){
+                        let check=await prisma.barang.findFirst({
                             where:{
-                                id:result.id
+                                id:body.barang[i].barang_id
                             }
                         })
-                        await prisma.barang_on_peminjaman.deleteMany({
-                            where:{
-                                peminjaman_id: result.id
-                            }
-                        })
-                        res.status(400).json(jsonfalse("No stock available","Amount of goods is greater than what's available"))
-                    }
-                }
-                for(let i=0;i<body.barang.length;i++){
-                    let check=await prisma.barang.findFirst({
-                        where:{
-                            id:body.barang[i].barang_id
-                        }
-                    })
-                    if(check!=null)
-                        try {
+                        if(check != null && check.jumlah>=body.barang[i].jumlah && check.jumlah > 0){
+                            await prisma.barang_on_peminjaman.create({
+                                data:{
+                                    peminjaman_id: result.id,
+                                    barang_id: body.barang[i].barang_id,
+                                    jumlah: body.barang[i].jumlah
+                                }
+                            })
                             await prisma.barang.update({
                                 where: { id: body.barang[i].barang_id },
                                 data:{
                                     jumlah: check.jumlah-body.barang[i].jumlah
                                 }
                             })
-                        } catch (error) {
-                            res.status(500).json(jsonfalse("Server is unable to process request",error))
-                            
+                            idx++
+                        } else {
+                            throw new Error()
                         }
+                    }
+                } catch (error) {
+                    for(let i=0;i<=idx;i++){
+                        let check=await prisma.barang.findFirst({
+                            where:{
+                                id:body.barang[i].barang_id
+                            }
+                        })
+                        if(check != null){
+                            await prisma.barang_on_peminjaman.create({
+                                data:{
+                                    peminjaman_id: result.id,
+                                    barang_id: body.barang[i].barang_id,
+                                    jumlah: body.barang[i].jumlah
+                                }
+                            })
+                            await prisma.barang.update({
+                                where: { id: body.barang[i].barang_id },
+                                data:{
+                                    jumlah: check.jumlah+body.barang[i].jumlah
+                                }
+                            })
+                        }
+                    }
+                    await prisma.peminjaman.delete({
+                        where:{
+                            id:result.id
+                        }
+                    })
+                    await prisma.barang_on_peminjaman.deleteMany({
+                        where:{
+                            peminjaman_id: result.id
+                        }
+                    })
+                    res.status(400).json(jsonfalse("No stock available","Amount of goods is greater than what's available"))                    
                 }
                 let barangs=await prisma.peminjaman.findFirst({
                     where:{id:result.id},
