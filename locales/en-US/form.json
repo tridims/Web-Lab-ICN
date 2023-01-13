@@ -10,7 +10,7 @@
   "return_date": "Return Date",
   "item_placeholder": "Select item you want to borrow",
   "amount_placeholder": "Amount",
-  "borrow_id": "Borrow ID",
+  "borrow_id": "Borrow Code",
   "recipient_name": "Recipient Name",
   "add_button": "+ Add Item"
 }

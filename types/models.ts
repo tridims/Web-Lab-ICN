@@ -27,9 +27,33 @@ interface Barang {
     jumlah: number,
 }
 
+interface Peminjaman {
+    id: number,
+    nama: string,
+    nim: string,
+    no_telp: string,
+    email: string,
+    keperluan: string,
+    alamat: string,
+    pinjam: string,
+    kembali: string,
+    aktual_kembali: string,
+    kode_peminjaman: string,
+    penerima: string,
+    barang: any[],
+    status: boolean
+}
+
+interface Keterlambatan {
+    keterlambatan: string,
+    denda: string,
+}
+
 export type {
     Kegiatan,
     Pesan,
     Anggota,
-    Barang
+    Barang,
+    Peminjaman,
+    Keterlambatan
 }

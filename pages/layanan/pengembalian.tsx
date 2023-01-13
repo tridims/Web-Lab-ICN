@@ -8,15 +8,15 @@ import Content from '../../components/content'
 import { t } from '../../lib/i18n'
 
 export default () => {
-  const [id, setId] = useState(0);
-  const [name, setName] = useState('');
+  const [code, setCode] = useState('')
+  const [name, setName] = useState('')
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    returnItem(id, name)
+    returnItem(code, name)
       .then(response => {
         if (response) {
-          setId(0)
+          setCode('')
           setName('')
         }
       })
@@ -33,8 +33,8 @@ export default () => {
           <form onSubmit={handleSubmit} className='block text-center'>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-60'>{t('form:borrow_id')}</span>
-              <Input value={id || ''} onChange={(e) => setId(Number.parseInt(e.target.value))}
-                className='w-full' type='text' placeholder='123' bordered required />
+              <Input value={code} onChange={(e) => setCode(e.target.value)}
+                className='w-full' type='text' placeholder='A92U32' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-60'>{t('form:recipient_name')}</span>
@@ -51,31 +51,22 @@ export default () => {
   )
 }
 
-const returnItem = async (id: number, name: string) => {
-  const res = await fetch(`/api/pinjam/${id}`)
-  const item = await res.json()
-
-  if (item.data === null) {
-    toast('ID peminjaman tidak valid.', {
-      type: 'error'
-    })
-    return false
-  }
-
+const returnItem = async (code: string, name: string) => {
   const rawResponse = await fetch('/api/pinjam', {
     method: 'PATCH',
     headers: {
       'Content-type': 'application/json; charset=UTF-8'
     },
     body: JSON.stringify({
-      peminjaman_id: id,
+      kode_peminjaman: code,
       penerima: name
     })
   })
 
   const response = await rawResponse.json()
+  console.log(response)
   if (!response.success) {
-    toast('Barang telah dikembalikan.', {
+    toast(`Error: ${response.message}.`, {
       type: 'error'
     })
     return false
@@ -84,7 +75,7 @@ const returnItem = async (id: number, name: string) => {
   withReactContent(Swal)
     .fire({
       title: <p>Barang berhasil dikembalikan.</p>,
-      html: `Terima kasih ${response.data.nama} atas pengembalian barang yang telah dilakukan.`,
+      html: `Terima kasih ${response.data.peminjaman.nama} atas pengembalian barang yang telah dilakukan.`,
       icon: 'success',
       allowOutsideClick: false
     })
