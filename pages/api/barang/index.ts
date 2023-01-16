@@ -15,9 +15,12 @@ async function getBarang(res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getBarang(res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Barang API!",null))
+    switch (req.method) {
+        case 'GET':
+            getBarang(res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Barang API!",null))
+            break
     }
 }

@@ -43,11 +43,15 @@ async function postAnggota(req:any,res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getAnggota(res)
-    }else if(req.method==="POST"){
-        postAnggota(req,res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Anggota API!",null))
+    switch (req.method) {
+        case 'GET':
+            getAnggota(res)
+            break
+        case 'POST':
+            postAnggota(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Anggota API!",null))
+            break
     }
 }

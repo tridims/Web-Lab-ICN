@@ -37,11 +37,15 @@ async function postPresensi(req:any,res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getPresensi(res)
-    }else if(req.method==='POST'){
-        postPresensi(req,res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Presensi API!",null))
+    switch (req.method) {
+        case 'GET':
+            getPresensi(res)
+            break
+        case 'POST':
+            postPresensi(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Presensi API!",null))
+            break
     }
 }

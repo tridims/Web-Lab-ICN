@@ -31,11 +31,15 @@ async function postTags(req:any,res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getTags(res)
-    }else if(req.method==='POST'){
-        postTags(req,res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Tags API!",null))
+    switch (req.method) {
+        case 'GET':
+            getTags(res)
+            break
+        case 'POST':
+            postTags(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Tags API!",null))
+            break
     }
 }

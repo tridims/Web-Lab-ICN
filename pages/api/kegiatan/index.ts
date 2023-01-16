@@ -76,11 +76,15 @@ async function postKegiatan(req:any,res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getKegiatan(res)
-    }else if(req.method==='POST'){
-        postKegiatan(req,res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Kegiatan API!",null))
+    switch (req.method) {
+        case 'GET':
+            getKegiatan(res)            
+            break
+        case 'POST':
+            postKegiatan(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Kegiatan API!",null))
+            break
     }
 }

@@ -120,7 +120,8 @@ async function postPinjam(req: any, res: any) {
                             }
                         }
                     })
-                    email(body.email, "Invoice Peminjaman Barang Lab", "", ReactDOMServer.renderToStaticMarkup(Peminjaman(barangs))).catch(console.error);
+                    if (barangs!=null)
+                        email(body.email, "Invoice Peminjaman Barang Lab", "", ReactDOMServer.renderToStaticMarkup(Peminjaman(barangs))).catch(console.error);
                     res.status(200).json(jsontrue("Data added succesfully", result))
                 } catch (error) {
                     res.status(500).json(jsonfalse("Server is unable to process request", error))
@@ -191,13 +192,18 @@ function datecalc(Expected:Date,Actual:Date){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === 'GET') {
-        getPinjam(res)
-    } else if (req.method === 'POST') {
-        postPinjam(req, res)
-    } else if (req.method === 'PATCH') {
-        patchPinjam(req, res)
-    } else {
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Pinjam API!", null))
+    switch (req.method) {
+        case 'GET':
+            getPinjam(res)
+            break
+        case 'POST':
+            postPinjam(req,res)
+            break
+        case 'PATCH':
+            patchPinjam(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Pinjam API!", null))
+            break
     }
 }

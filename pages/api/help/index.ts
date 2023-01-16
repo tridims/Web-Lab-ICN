@@ -36,11 +36,15 @@ async function postHelp(req:any,res:any){
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
-    if(req.method==='GET'){
-        getHelp(res)
-    }else if(req.method==='POST'){
-        postHelp(req,res)
-    }else{
-        res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Help API!",null))
+    switch (req.method) {
+        case 'GET':
+            getHelp(res)
+            break
+        case 'POST':
+            postHelp(req,res)
+            break
+        default:
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Help API!",null))
+            break
     }
 }
