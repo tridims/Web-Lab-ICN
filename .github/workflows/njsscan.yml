@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: read
       security-events: write
-      actions: rea
+      actions: read
     runs-on: ubuntu-latest
     name: njsscan code scanning
     steps:
