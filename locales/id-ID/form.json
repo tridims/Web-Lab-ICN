@@ -1,0 +1,16 @@
+{
+  "name": "Nama Lengkap",
+  "nim": "NIM",
+  "address": "Alamat",
+  "email": "Email",
+  "phone": "Nomor Telepon",
+  "purpose": "Keperluan",
+  "purpose_placeholder": "Konsultasi",
+  "borrow_date": "Tanggal Peminjaman",
+  "return_date": "Tanggal Pengembalian",
+  "item_placeholder": "Pilih barang yang akan dipinjam",
+  "amount_placeholder": "Jumlah",
+  "borrow_id": "Kode Peminjaman",
+  "recipient_name": "Nama Penerima",
+  "add_button": "+ Tambah Barang"
+}

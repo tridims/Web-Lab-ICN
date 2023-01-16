@@ -1,0 +1,42 @@
+{
+  "page": {
+    "title": "Layanan",
+    "subtitle": "Lab Jaringan Berbasis Informasi",
+    "button": "Lihat Layanan"
+  },
+  "attendance": {
+    "item": {
+      "title": "Presensi Masuk Laboratorium",
+      "description": "Presensi Masuk Laboratorium ..."
+    },
+    "title": "Presensi",
+    "subtitle": "Masuk Laboratorium",
+    "heading": "Silakan isi Presensi"
+  },
+  "borrow": {
+    "item": {
+      "title": "Peminjaman Barang Laboratorium",
+      "description": "Peminjaman Barang Laboratorium ..."
+    },
+    "title": "Peminjaman",
+    "subtitle": "Barang Laboratorium",
+    "rules_title": "Tata Tertib Peminjaman Barang",
+    "rules_1": "Durasi maksimal peminjaman barang adalah 7 hari. Keterlambatan pengembalian DENDA 20.000/hari.",
+    "rules_2": "Barang diwajibkan kembali dalam keadaan baik. Apabila terdapat kerusakan maka wajib mengganti senilai 50% dari harga barang.",
+    "rules_3": "Barang yang hilang wajib diganti dengan barang serupa.",
+    "data_title": "Data Peminjaman",
+    "items_title": "Daftar Peminjaman",
+    "item_name": "Nama Barang",
+    "item_description": "Deskripsi Barang",
+    "item_stock": "Stok Barang"
+  },
+  "return": {
+    "item": {
+      "title": "Pengembalian Barang Laboratorium",
+      "description": "Pengembalian Barang Laboratorium ..."
+    },
+    "title": "Pengembalian",
+    "subtitle": "Barang Laboratorium",
+    "heading": "Data Pengembalian"
+  }
+}

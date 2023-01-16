@@ -4,7 +4,7 @@ services:
   web:
     container_name: web_app_lab_jarkom
     user: node
-    image: node
+    image: node:18
     command: sh -c "npm install && npx prisma migrate dev --name init && npm run dev"
     env_file: ".env"
     restart: always
@@ -34,13 +34,28 @@ services:
       test: ["CMD-SHELL", "sh -c 'pg_isready -U $DATABASE_USER -d $DATABASE'"]
       interval: 10s
       timeout: 3s
-      retries: 3
+      retries: 10
     networks:
       - network_app_lab_jarkom
     volumes:
       - dbcont:/var/lib/postgresql/data:rw
     ports:
       - 5432:5432
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_app_lab_jarkom
+    env_file: ".env"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "$PG_EMAIL"
+      PGADMIN_DEFAULT_PASSWORD: "$PG_PASSWORD"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - network_app_lab_jarkom
+    ports:
+      - 8080:80
 
 networks:
   network_app_lab_jarkom:

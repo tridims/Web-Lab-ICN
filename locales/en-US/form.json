@@ -1,0 +1,16 @@
+{
+  "name": "Full Name",
+  "nim": "Student ID",
+  "address": "Address",
+  "email": "Email",
+  "phone": "Phone Number",
+  "purpose": "Purposes",
+  "purpose_placeholder": "Thesis Consult",
+  "borrow_date": "Borrow Date",
+  "return_date": "Return Date",
+  "item_placeholder": "Select item you want to borrow",
+  "amount_placeholder": "Amount",
+  "borrow_id": "Borrow Code",
+  "recipient_name": "Recipient Name",
+  "add_button": "+ Add Item"
+}

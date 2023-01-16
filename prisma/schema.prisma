@@ -3,22 +3,103 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  extensions = [citext]
 }
 
-model User{
-  ID Int @id @default(autoincrement())
-  Name String?
-  Email String? @unique
-  Password String?
+model anggota{
+  id Int @id @default(autoincrement())
+  nama String
+  email String @unique
+  nim_nip String @unique
+  prodi Int
+  tipe Int @default(2)
+  kegiatan anggota_on_kegiatan[]
 }
 
-model Model{
-  ID Int @id @default(autoincrement())
-  Name String?
-  Description String?
+model tags{
+  id Int @id @default(autoincrement())
+  nama String @db.Citext @unique
+  kegiatan tags_on_kegiatan[]
+}
+
+model kegiatan{
+  id Int @id @default(autoincrement())
+  tipe Int
+  judul String
+  gambar String
+  deskripsi String
+  artikel String
+  tags tags_on_kegiatan[]
+  anggota anggota_on_kegiatan[]
+}
+
+model tags_on_kegiatan{
+  id Int @id @default(autoincrement())
+  tags  tags  @relation(fields: [tags_id], references: [id])
+  tags_id Int
+  kegiatan kegiatan @relation(fields: [kegiatan_id], references: [id], onDelete: Cascade)
+  kegiatan_id Int
+}
+
+model anggota_on_kegiatan{
+  id Int @id @default(autoincrement())
+  anggota anggota @relation(fields: [anggota_id], references: [id])
+  anggota_id Int
+  kegiatan kegiatan @relation(fields: [kegiatan_id], references: [id], onDelete: Cascade)
+  kegiatan_id Int
+}
+
+model peminjaman{
+  id Int @id @default(autoincrement())
+  nama String
+  nim String
+  no_telp String
+  email String
+  keperluan String
+  alamat String
+  pinjam DateTime
+  kembali DateTime
+  aktual_kembali DateTime @default(now())
+  kode_peminjaman String @unique
+  penerima String @default("")
+  status Boolean @default(false)
+  barang barang_on_peminjaman[]
+}
+
+model barang{
+  id Int @id @default(autoincrement())
+  nama String
+  deskripsi String?
+  jumlah Int
+  peminjaman barang_on_peminjaman[]
+}
+
+model barang_on_peminjaman{
+  id Int @id @default(autoincrement())
+  barang barang @relation(fields: [barang_id], references: [id])
+  barang_id Int
+  peminjaman peminjaman @relation(fields: [peminjaman_id], references: [id], onDelete: Cascade)
+  peminjaman_id Int
+  jumlah Int
+}
+
+model presensi{
+  id Int @id @default(autoincrement())
+  nama String
+  email String
+  nim String
+  no_telp String?
+  keperluan String
+}
+
+model pesan{
+  id Int @id @default(autoincrement())
+  email String
+  pesan String
 }

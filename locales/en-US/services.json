@@ -1,0 +1,42 @@
+{
+  "page": {
+    "title": "Service",
+    "subtitle": "Information Based Network Lab",
+    "button": "View Service"
+  },
+  "attendance": {
+    "item": {
+      "title": "Laboratory Attendance",
+      "description": "Laboratory Attendance..."
+    },
+    "title": "Presence",
+    "subtitle": "Laboratory Entry",
+    "heading": "Please fill in Attendance"
+  },
+  "borrow": {
+    "item": {
+      "title": "Laboratory Items Borrow",
+      "description": "Laboratory Items Borrow..."
+    },
+    "title": "Borrowing",
+    "subtitle": "Laboratory Items",
+    "rules_title": "Rules of Procedure for Borrowing Items",
+    "rules_1": "The maximum duration of borrowing is 7 days. Late returns will be fined Rp20,000/day.",
+    "rules_2": "Items are required to be returned in good condition. If there is damage, it is mandatory to replace 50% of the price of the item.",
+    "rules_3": "Lost items must be replaced with similar items.",
+    "data_title": "Borrower Data",
+    "items_title": "Items List",
+    "item_name": "Item Name",
+    "item_description": "Item Description",
+    "item_stock": "Item Stock"
+  },
+  "return": {
+    "item": {
+      "title": "Laboratory Item Return",
+      "description": "Laboratory Item Return..."
+    },
+    "title": "Returns",
+    "subtitle": "Laboratory Goods",
+    "heading": "Returns Data"
+  }
+}
