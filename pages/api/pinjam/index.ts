@@ -184,7 +184,7 @@ async function patchPinjam(req:any,res:any){
 }
 
 function datecalc(Expected:Date,Actual:Date){
-    return Math.round((Actual.valueOf()-Expected.valueOf())/86400)
+    return Math.round(((Actual.valueOf()-Expected.valueOf())/86400)/1000)
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
