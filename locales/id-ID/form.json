@@ -10,7 +10,7 @@
   "return_date": "Tanggal Pengembalian",
   "item_placeholder": "Pilih barang yang akan dipinjam",
   "amount_placeholder": "Jumlah",
-  "borrow_id": "ID Peminjaman",
+  "borrow_id": "Kode Peminjaman",
   "recipient_name": "Nama Penerima",
   "add_button": "+ Tambah Barang"
 }

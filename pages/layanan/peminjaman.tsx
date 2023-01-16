@@ -31,7 +31,7 @@ export default ({ data }: { data: APIResponse }) => {
   const [nim, setNim] = useState(0)
   const [alamat, setAlamat] = useState('')
   const [email, setEmail] = useState('')
-  const [noTelp, setNoTelp] = useState(0)
+  const [noTelp, setNoTelp] = useState('')
   const [keperluan, setKeperluan] = useState('')
   const [pinjam, setPinjam] = useState('')
   const [kembali, setKembali] = useState('')
@@ -109,14 +109,14 @@ export default ({ data }: { data: APIResponse }) => {
         setKembali('')
         setPinjam('')
         setNim(0)
-        setNoTelp(0)
+        setNoTelp('')
         setEmail('')
         setKeperluan('')
         setBarangInputs([{ jumlah: 0 }])
         withReactContent(Swal)
           .fire({
             title: <p>Peminjaman berhasil dilakukan.</p>,
-            html: `Silakan cek Email Anda untuk detil lebih lanjut mengenai peminjaman yang telah dilakukan.<br>ID Peminjaman Anda adalah: ${resJson.data.id}`,
+            html: `Silakan cek Email Anda untuk detil lebih lanjut mengenai peminjaman yang telah dilakukan.<br>Kode Peminjaman Anda adalah: ${resJson.data.kode_peminjaman}`,
             icon: 'success',
             allowOutsideClick: false
           }).then(() => {
@@ -173,7 +173,7 @@ export default ({ data }: { data: APIResponse }) => {
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>
               <span className='lg:w-52'>{t('form:phone')}</span>
-              <Input value={noTelp || ''} onChange={e => setNoTelp(Number.parseInt(e.target.value))}
+              <Input value={noTelp} onChange={e => setNoTelp((e.target.value).replace(/[^0-9]+/g, ''))}
                 className='w-full' type='tel' placeholder='083341612722' bordered required />
             </InputGroup>
             <InputGroup size='lg' className='mb-6 shadow max-lg:input-group-vertical'>

@@ -1,4 +1,6 @@
-function Help(email: string, pesan: string) {
+import { Pesan } from "../../types/models"
+
+function Help({ email, pesan }: Pesan) {
   return (
     <div style={{
       backgroundColor: '#f5f5f5',
