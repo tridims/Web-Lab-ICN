@@ -12,7 +12,7 @@ export default async function email(receiver:string,subject:string,text:string="
     });
 
     transporter.sendMail({
-        from: '"TESTING" <'+`${process.env.EMAIL}`+'>', // sender address
+        from: '"Information Centric Networking Lab" <'+`${process.env.EMAIL}`+'>', // sender address
         to: receiver, // receiver
         subject: subject, // Subject line
         text: text, // plain text body
