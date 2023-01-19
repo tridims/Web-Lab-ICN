@@ -2,6 +2,7 @@
 
 import prisma from "../lib/prisma"
 import { faker } from "@faker-js/faker"
+import { isIP } from "net"
 import ShortUniqueId from "short-unique-id"
 
 async function main(){
@@ -112,6 +113,14 @@ async function main(){
                 no_telp: faker.phone.number("+62 ### #### ####")
             }
         })
+    for(let i=0;i<10;i++){
+        await prisma.pengumuman.create({
+            data:{
+                judul:faker.lorem.sentence(10),
+                isi: faker.lorem.lines(7)
+            }
+        })
+    }
 }
 
 main()
