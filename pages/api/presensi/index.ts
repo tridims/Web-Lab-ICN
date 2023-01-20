@@ -5,7 +5,7 @@ import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 import email from "../../../lib/email";
 
-async function getPresensi(res:any){
+async function getPresensi(res: NextApiResponse){
     let presensi:presensi[]
     try {
         presensi=await prisma.presensi.findMany()
@@ -15,7 +15,7 @@ async function getPresensi(res:any){
     }
 }
 
-async function postPresensi(req:any,res:any){
+async function postPresensi(req: NextApiRequest,res: NextApiResponse){
     const body=req.body
     if(body.nama!=null && body.email!=null && body.keperluan!=null && body.nim!=null && body.no_telp!=null){
         try {

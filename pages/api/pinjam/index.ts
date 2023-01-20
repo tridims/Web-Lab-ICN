@@ -9,7 +9,7 @@ import Peminjaman from "../../../lib/mail/Peminjaman";
 import Pengembalian from "../../../lib/mail/Pengembalian";
 import ReactDOMServer from "react-dom/server";
 
-async function getPinjam(res: any) {
+async function getPinjam(res: NextApiResponse) {
     let pinjam: peminjaman[]
     try {
         pinjam = await prisma.peminjaman.findMany({
@@ -27,7 +27,7 @@ async function getPinjam(res: any) {
     }
 }
 
-async function postPinjam(req: any, res: any) {
+async function postPinjam(req: NextApiRequest, res: NextApiResponse) {
     const body = req.body
     if (body.nama != null && body.nim != null && body.no_telp != null && body.alamat != null && body.pinjam != null && body.kembali != null && body.barang != null) {
         if (Math.ceil((new Date(body.kembali).getTime() - new Date(body.pinjam).getTime()) / (1000 * 3600 * 24)) < 0)
@@ -131,7 +131,7 @@ async function postPinjam(req: any, res: any) {
     } else res.status(400).json(jsonfalse("Data is not complete", "Object is possibly has 'null' values"))
 }
 
-async function patchPinjam(req: any, res: any) {
+async function patchPinjam(req: NextApiRequest, res: NextApiResponse) {
     let body = req.body
     let data = await prisma.peminjaman.findFirst({
         where: { kode_peminjaman: body.kode_peminjaman }
@@ -143,7 +143,8 @@ async function patchPinjam(req: any, res: any) {
                     data: {
                         status: true,
                         penerima: body.penerima,
-                        aktual_kembali: new Date()
+                        aktual_kembali: new Date(),
+                        updated: new Date()
                     },
                     where: { kode_peminjaman: body.kode_peminjaman },
                     include: {

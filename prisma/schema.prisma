@@ -19,12 +19,16 @@ model anggota{
   nim_nip String @unique
   prodi Int
   tipe Int @default(2)
+  created DateTime @default(now())
+  updated DateTime @default(now())
   kegiatan anggota_on_kegiatan[]
 }
 
 model tags{
   id Int @id @default(autoincrement())
   nama String @db.Citext @unique
+  created DateTime @default(now())
+  updated DateTime @default(now())
   kegiatan tags_on_kegiatan[]
 }
 
@@ -35,6 +39,8 @@ model kegiatan{
   gambar String
   deskripsi String
   artikel String
+  created DateTime @default(now())
+  updated DateTime @default(now())
   tags tags_on_kegiatan[]
   anggota anggota_on_kegiatan[]
 }
@@ -69,6 +75,8 @@ model peminjaman{
   kode_peminjaman String @unique
   penerima String @default("")
   status Boolean @default(false)
+  created DateTime @default(now())
+  updated DateTime @default(now())
   barang barang_on_peminjaman[]
 }
 
@@ -77,6 +85,8 @@ model barang{
   nama String
   deskripsi String?
   jumlah Int
+  created DateTime @default(now())
+  updated DateTime @default(now())
   peminjaman barang_on_peminjaman[]
 }
 
@@ -108,4 +118,6 @@ model pengumuman{
   id Int @id @default(autoincrement())
   judul String
   isi String
+  created DateTime @default(now())
+  updated DateTime @default(now())
 }

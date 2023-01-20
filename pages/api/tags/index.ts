@@ -4,7 +4,7 @@ import { tags } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 
-async function getTags(res:any){
+async function getTags(res: NextApiResponse){
     let tags:tags[]
     try {
         tags=await prisma.tags.findMany()
@@ -14,7 +14,7 @@ async function getTags(res:any){
     }
 }
 
-async function postTags(req:any,res:any){
+async function postTags(req: NextApiRequest,res: NextApiResponse){
     const body=req.body
     if(body.nama!=null){
         try {
@@ -30,6 +30,24 @@ async function postTags(req:any,res:any){
     }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
 }
 
+async function patchPinjam(req: NextApiRequest, res: NextApiResponse){
+    const body=req.body
+    if(body.nama!=null){
+        try{
+            let result = await prisma.tags.update({
+                where:{id:body.id},
+                data:{
+                    nama: body.nama,
+                    updated: new Date()
+                }
+            })
+            res.status(200).json(jsontrue("Data added succesfully",result))
+        }catch (error){
+            res.status(500).json(jsonfalse("Server is unable to process request or data is duplicate",error))
+        }
+    }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     switch (req.method) {
         case 'GET':
@@ -37,6 +55,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             break
         case 'POST':
             postTags(req,res)
+            break
+        case 'PATCH':
+            patchPinjam(req,res)
             break
         default:
             res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Tags API!",null))
