@@ -101,6 +101,12 @@ async function patchKegiatan(req: NextApiRequest, res: NextApiResponse){
             writeFileSync(filePath,gambar)
             try {
                 let result=await prisma.$transaction([
+                    prisma.anggota_on_kegiatan.deleteMany({
+                        where:{kegiatan_id:body.id}
+                    }),
+                    prisma.tags_on_kegiatan.deleteMany({
+                        where:{kegiatan:body.id}
+                    }),
                     prisma.kegiatan.update({
                         where:{id:body.id},
                         data:{
@@ -111,19 +117,13 @@ async function patchKegiatan(req: NextApiRequest, res: NextApiResponse){
                             tipe: body.tipe,
                             updated:new Date(),
                             anggota:{
-                                updateMany:{
-                                    where:{kegiatan_id:body.id},
-                                    data:{
-                                        anggota_id: body.anggota.anggota_id
-                                    }
+                                createMany:{
+                                    data: body.anggota
                                 }
                             },
                             tags:{
-                                updateMany:{
-                                    where:{kegiatan_id:body.id},
-                                    data: {
-                                        tags_id: body.tags.anggota_id
-                                    }
+                                createMany:{
+                                    data: body.tags
                                 }
                             }
                         },
