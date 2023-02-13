@@ -16,7 +16,7 @@ model anggota{
   id Int @id @default(autoincrement())
   nama String
   email String @unique
-  nim_nip String @unique
+  nim_nip String? @unique
   prodi Int
   tipe Int @default(2)
   created DateTime @default(now())
