@@ -36,8 +36,8 @@ model kegiatan{
   id Int @id @default(autoincrement())
   tipe Int
   judul String
-  gambar String
-  deskripsi String
+  gambar String?
+  deskripsi String?
   artikel String
   created DateTime @default(now())
   updated DateTime @default(now())

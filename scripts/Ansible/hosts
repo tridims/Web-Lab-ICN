@@ -1,7 +1,11 @@
 [docker_hosts]
-10.34.15.175 ansible_user=pi
-10.34.15.176 ansible_user=pi
-10.34.15.177 ansible_user=pi
+10.34.15.183 ansible_user=pi
+10.34.15.186 ansible_user=pi
+10.34.15.181 ansible_user=pi
 
 [docker_hosts_master]
-10.34.15.175 ansible_user=pi
+10.34.15.183 ansible_user=pi
+
+[docker_hosts_slaves]
+10.34.15.186 ansible_user=pi
+10.34.15.181 ansible_user=pi

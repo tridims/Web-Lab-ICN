@@ -327,21 +327,94 @@ async function tags(){
         })
 }
 
-// async function kegiatan(){
-//     let input = [
-//         {
-//             tipe: faker.datatype.number({min:1,max:4}),
-//             judul: faker.lorem.sentence(5),
-//             gambar: faker.image.imageUrl(480,480),
-//             deskripsi: faker.lorem.sentence(15),
-//             artikel: faker.lorem.sentences(200)
-//         }
-//     ]
-// }
+// tipe:
+//      1 = Penelitian
+//      2 = Pengabdian
+//      3 = Pendidikan
+//      4 = Kegiatan Lain
+async function kegiatan(){
+    await prisma.kegiatan.create({
+        data:{
+            tipe:2,
+            judul:"Pemanfaatan Moodlebox Berbasis Raspberry Pi sebagai Media Pembelajaran Daring bagi Komunitas Konservasi Mangrove di Malang Selatan",
+            gambar: "uploads/Rectangle 21.png",
+            deskripsi: "Foto bersama setelah serah terima perangkat MoodleBox berbasis Raspberry Pi dari tim dosen FILKOM kepada komunitas konservasi mangrove",
+            artikel: "Dalam rangka menunaikan salah satu unsur Tri-Dharma Perguruan Tinggi, tim dosen dari Fakultas Ilmu Komputer Universitas Brawijaya (FILKOM UB) kembali melaksanakan program pengabdian kepada masyarakat. Kelompok dosen yang beranggotakan Ari Kusyanti, S.T., M.Sc., Ir. Primantara hari Trisnawan, M.Sc., dan Kasyful Amron, S.T., M.Sc., serta diketuai oleh Fariz Andri Bakhtiar, S.T., M.Kom. ini berupaya memberikan pelatihan mengenai pemanfaatan MoodleBox berbasis Raspberry Pi kepada masyarakat komunitas konservasi mangrove di daerah Malang Selatan. Program pengabdian ini juga melibatkan mahasiswa aktif Fakultas Ilmu Komputer, antara lain Gabrielle Evan Farrel dan Ifadatul Khoiroh \
+            \
+            Semenjak pandemi COVID-19 melanda, edukasi kepada masyarakat awam yang kerap dilakukan oleh komunitas konservasi mangrove pun turut menyesuaikan diri dengan diselenggarakan secara blended (tatap muka dan jarak jauh), dengan memanfaatkan konsep Massive Open Online Course (MOOC). Hanya saja, lokasi edukasi yang jauh dari perkotaan mengakibatkan sering munculnya kendala untuk terkoneksi dengan jaringan internet. Maka, diharapkan platform khusus yang menggunakan server portabel tanpa ketersambungan secara kontinu dengan jaringan internet dapat membantu agar proses edukasi daring di area terpencil tetap dapat terlaksana dalam lingkup jaringan lokal.",
+            tags:{
+                createMany:{
+                    data: [
+                        {
+                            "tags_id": 1
+                        },
+                        {
+                            "tags_id": 2
+                        },
+                        {
+                            "tags_id": 3
+                        },
+                        {
+                            "tags_id": 4
+                        },
+                        {
+                            "tags_id": 5
+                        },
+                        {
+                            "tags_id": 6
+                        },
+                        {
+                            "tags_id": 7
+                        },
+                        {
+                            "tags_id": 8
+                        },
+                    ]
+                }
+            }
+        }
+    })
+    await prisma.kegiatan.create({
+        data:{
+            tipe: 4,
+            judul: "Program Industry Visit Ke Perusahaan Redhat",
+            gambar: "uploads/1-7.jpg",
+            deskripsi: "",
+            artikel: "Setelah masa pandemic, seluruh kegiatan mulai kembali berjalan. Kegiatan yang mengharuskan dilakukan secara tatap muka telah digelar kembali. Pada Kesempatan ini, Fakultas Ilmu Komputer Universitas Brawijaya (FILKOM UB) yang di sponsori oleh laboratorium jaringan berbasis informasi mengadakan program Industry visit ke salah satu perusahaan yang telah bekerja sama dengan FILKOM yaitu REDHAT.\
+            \
+            Fakultas Ilmu Komputer mengirimkan 8 mahasiswa delegasi dalam program industry visit REDHAT pada tanggal 27 juni 2022 lalu. Program ini bertujuan untuk mengenalkan dunia industry langsung kepada mahasiswa agar lebih memahami bagaimana kinerja sebuah perusahaan. Selain itu, mahasiswa akan dikenalkan bagaimana lingkungan pekerjaan di bidang teknologi. Pada Kesempatan kali ini laboratorium jaringan berbasis informasi mengirimkan 4 anggota mahasiswanya sebagai delegasi pada program tersebut. Laboratorium jaringan berbasis informasi mengaharapkan apa yang telah di dapat pada program visit industry ini dapat diterapkan dan dikembangkan di lingkungan laboratorium dan mempererat jalinan kerjasama antara perusahaan dengan  Fakultas Ilmu Komputer khususnya Laboratorium jaringan.",
+            tags:{
+                createMany:{
+                    data: [
+                        {
+                            "tags_id": 9
+                        },
+                        {
+                            "tags_id": 10
+                        },
+                        {
+                            "tags_id": 11
+                        },
+                        {
+                            "tags_id": 12
+                        },
+                        {
+                            "tags_id": 13
+                        },
+                        {
+                            "tags_id": 14
+                        },
+                    ]
+                }
+            }
+        }
+    })
+}
 
 async function main(){
     anggota()
     tags()
+    kegiatan()
 }
 
 main()
