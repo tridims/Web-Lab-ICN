@@ -35,7 +35,7 @@
     "autoprefixer": "^10.4.13",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
-    "nodemailer": "^6.8.0",
+    "nodemailer": "^6.9.1",
     "postcss": "^8.4.20",
     "prisma": "^4.8.0",
     "short-unique-id": "^4.4.4",
