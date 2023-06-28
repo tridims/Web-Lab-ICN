@@ -36,3 +36,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 public/uploads
+
+# Ansible
+./scripts/Ansible/node-token

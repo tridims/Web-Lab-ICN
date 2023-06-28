@@ -1,0 +1,175 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 9
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: web-lab-jarkom
+          image: thatevan/lab-jarkom-web:latest
+          command:
+            - sh
+            - -c
+            - "npm install && npx prisma migrate dev --name init && npm run dev"
+          envFrom:
+            - configMapRef:
+                name: web-env
+          workingDir: /app
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "pg_isready -U DATABASE_USER -d DATABASE"
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            successThreshold: 1
+            failureThreshold: 10
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web
+  ports:
+    - name: web-port
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  selector:
+    matchLabels:
+      app: db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db-lab-jarkom
+        image: postgres:latest
+        envFrom:
+        - configMapRef:
+            name: db-env
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: db-data
+        persistentVolumeClaim:
+          claimName: db-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  selector:
+    app: db
+  ports:
+    - name: db-port
+      port: 5432
+      targetPort: 5432
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-env
+data:
+  .env: |-
+    DATABASE_URL: "postgresql://DATABASE_USER:DATABASE_PASSWORD@db-deployment/DATABASE
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-env
+data:
+  .env: |-
+    POSTGRES_USER: "DATABASE_USER"
+    POSTGRES_PASSWORD: "DATABASE_PASSWORD"
+    POSTGRES_DB: "DATABASE"
+    PGUSER: "DATABASE_USER"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+spec:
+  selector:
+    app: web-deployment
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  selector:
+    app: db-deployment
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+  type: LoadBalancer

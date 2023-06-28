@@ -1,28 +1,27 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
-import { barang } from "@prisma/client";
+import { pengumuman, pesan } from "@prisma/client";
 import jsontrue from "../../../lib/jsontrue";
 import jsonfalse from "../../../lib/jsonfalse";
 
-async function getBarang(res: NextApiResponse){
-    let barang:barang[]
+async function getPengumuman(res: NextApiResponse){
+    let news:pengumuman[]
     try {
-        barang=await prisma.barang.findMany()
-        res.status(200).json(jsontrue("Data query successful",barang))
+        news=await prisma.pengumuman.findMany()
+        res.status(200).json(jsontrue("Data query successful",news))
     } catch (error) {
         res.status(500).json(jsonfalse("server is unable to process request",error))
     }
 }
 
-async function postBarang(req: NextApiRequest, res: NextApiResponse){
+async function postPengumuman(req: NextApiRequest,res: NextApiResponse){
     const body=req.body
-    if(body.jumlah!=null,body.nama!=null,body.deskripsi!=null){
+    if(body.email!=null && body.pesan!=null){
         try {
-            let result = await prisma.barang.create({
+            let result = await prisma.pengumuman.create({
                 data:{
-                    jumlah:body.jumlah,
-                    nama:body.nama,
-                    deskripsi:body.deskripsi
+                    judul: body.judul,
+                    isi: body.isi
                 }
             })
             res.status(200).json(jsontrue("Data added succesfully",result))
@@ -32,17 +31,16 @@ async function postBarang(req: NextApiRequest, res: NextApiResponse){
     }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
 }
 
-async function patchBarang(req: NextApiRequest, res: NextApiResponse){
+async function patchPengumuman(req: NextApiRequest,res: NextApiResponse){
     const body=req.body
-    if(body.jumlah!=null,body.nama!=null,body.deskripsi!=null){
+    if(body.email!=null && body.pesan!=null){
         try {
-            let result = await prisma.barang.update({
+            let result = await prisma.pengumuman.update({
                 where:{id:body.id},
                 data:{
-                    jumlah:body.jumlah,
-                    nama:body.nama,
-                    deskripsi:body.deskripsi,
-                    updated: new Date()
+                    judul: body.judul,
+                    isi: body.isi,
+                    updated:new Date()
                 }
             })
             res.status(200).json(jsontrue("Data added succesfully",result))
@@ -51,20 +49,21 @@ async function patchBarang(req: NextApiRequest, res: NextApiResponse){
         }
     }else res.status(400).json(jsonfalse("Data is not complete","Object is possibly has 'null' values"))
 }
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse){
     switch (req.method) {
         case 'GET':
-            getBarang(res)
+            getPengumuman(res)
             break
         case 'POST':
-            postBarang(req,res)
+            postPengumuman(req,res)
             break
         case 'PATCH':
-            patchBarang(req,res)
+            patchPengumuman(req,res)
             break
         default:
-            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Barang API!",null))
+            res.status(200).json(jsontrue("Welcome to Infomation Based Networking Lab's Pengumuman API!",null))
             break
     }
 }

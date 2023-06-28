@@ -7,7 +7,7 @@ import email from "../../../lib/email";
 import Help from "../../../lib/mail/Help";
 import * as ReactDOMServer from 'react-dom/server';
 
-async function getHelp(res:any){
+async function getHelp(res: NextApiResponse){
     let pesan:pesan[]
     try {
         pesan=await prisma.pesan.findMany()
@@ -17,7 +17,7 @@ async function getHelp(res:any){
     }
 }
 
-async function postHelp(req:any,res:any){
+async function postHelp(req: NextApiRequest,res: NextApiResponse){
     const body=req.body
     if(body.email!=null && body.pesan!=null){
         try {
