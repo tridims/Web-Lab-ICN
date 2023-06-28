@@ -2,9 +2,9 @@ name: System Build Test with Docker
 
 on:
   push:
-    branches: [ "main","development" ]
+    branches: [ "main","staging" ]
   pull_request:
-    branches: [ "main","development" ]
+    branches: [ "main","staging" ]
 
 jobs:
   build:

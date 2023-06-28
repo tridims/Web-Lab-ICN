@@ -12,7 +12,7 @@ function Help({ email, pesan }: Pesan) {
         width: '100px',
         height: '100px',
         margin: '0 auto',
-        backgroundImage: 'url("https://raw.githubusercontent.com/Evan-aja/lab-jarkom-fe/development/public/static/logo.png")',
+        backgroundImage: 'url("https://raw.githubusercontent.com/Lab-ICN/Web-Lab-ICN/main/public/static/logo.png")',
         backgroundSize: 'contain'
       }} />
       <div style={{
