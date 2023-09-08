@@ -1,10 +1,12 @@
-version: '3'
+version: "3"
 
 services:
   web:
     container_name: web_app_lab_jarkom
+    build:
+      context: .
+      dockerfile: Dockerfile
     user: node
-    image: node:18
     command: sh -c "npm install && npx prisma migrate dev --name init && npm run dev"
     env_file: ".env"
     restart: always
@@ -12,7 +14,7 @@ services:
       DATABASE_URL: "postgresql://$DATABASE_USER:$DATABASE_PASSWORD@db/$DATABASE"
     working_dir: /app
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
       - .:/app:rw
     depends_on:
@@ -20,7 +22,7 @@ services:
         condition: service_healthy
     networks:
       - network_app_lab_jarkom
-  
+
   db:
     image: postgres:latest
     container_name: db_app_lab_jarkom
@@ -41,7 +43,7 @@ services:
       - dbcont:/var/lib/postgresql/data:rw
     ports:
       - 5432:5432
-  
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin_app_lab_jarkom
