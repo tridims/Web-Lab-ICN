@@ -20,7 +20,7 @@ services:
     ports:
       - 80:3000
     volumes:
-      - webvol:/app:rw
+      - .:/app:rw
     depends_on:
       db:
         condition: service_healthy
@@ -69,7 +69,7 @@ networks:
     name: network_app_lab_jarkom
 
 volumes:
-  webvol:
+  .:
     name: web_app_lab_jarkom_volume
   dbcont:
     name: db_app_lab_jarkom_volume
