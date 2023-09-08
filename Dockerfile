@@ -4,12 +4,11 @@ FROM node:18
 WORKDIR /app
 
 # Install app dependencies
-# COPY package*.json ./
 COPY . .
+RUN rm -rf .env
 
+# Install app dependencies
 RUN npm install
-
-# Bundle app source
 
 EXPOSE 3000
 
